@@ -27,6 +27,8 @@ public class arrivals_chuka extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_arrivals_chuka);
         save_raw_mat_data();
+        save_raw_mat_data();
+
     }
 
 
