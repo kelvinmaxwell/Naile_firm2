@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat android:layout_height="250dp"
+    android:layout_width="match_parent"
+
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+    android:id="@+id/tooBar"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    android:background="@mipmap/ic_launcher_foreground"
+
+
+   >
+
+</android.support.v7.widget.LinearLayoutCompat>

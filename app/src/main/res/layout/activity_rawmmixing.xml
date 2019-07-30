@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".rawmmixing"
+    android:id="@+id/drawerlayout"
+    android:fitsSystemWindows="true"
+    >
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+    android:id="@+id/rootlayout"
+
+    android:orientation="vertical">
+
+    <include
+
+        android:id="@+id/include4"
+        layout="@layout/toolbar2"
+        />
+
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="87dp"
+            android:layout_height="58dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/pull" />
+
+        <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="328dp"
+        android:layout_height="145dp"
+
+        android:layout_marginEnd="33dp"
+        android:background="@drawable/card_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout2">
+
+        <EditText
+            android:id="@+id/rawmix2"
+            android:layout_width="273dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="35dp"
+            android:hint="rawm2"
+            android:textColor="@color/textboxcolor"
+            android:textSize="10dp"
+            android:theme="@style/txt" />
+
+        <EditText
+            android:id="@+id/editmix2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_above="@+id/rawmix2"
+            android:layout_marginBottom="24dp"
+            android:textColor="@color/textboxcolor"
+
+
+            android:textSize="10dp"
+            android:theme="@style/txt" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="325dp"
+        android:layout_height="155dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/card_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include4">
+
+        <EditText
+            android:id="@+id/rawmix1"
+            android:layout_width="273dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="18dp"
+            android:layout_marginBottom="35dp"
+            android:hint="rawm3"
+            android:textColor="@color/textboxcolor"
+            android:textSize="10dp"
+            android:theme="@style/txt" />
+
+        <EditText
+            android:id="@+id/editmix1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_above="@+id/rawmix1"
+            android:layout_marginBottom="27dp"
+            android:textColor="@color/textboxcolor"
+
+
+            android:textSize="10dp"
+            android:theme="@style/txt" />
+
+
+    </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout3"
+            android:layout_width="321dp"
+            android:layout_height="130dp"
+            android:layout_marginStart="4dp"
+            android:background="@drawable/card_view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
+
+            <EditText
+                android:id="@+id/rawmix3"
+                android:layout_width="273dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="57dp"
+                android:layout_marginBottom="35dp"
+                android:hint="rawm5"
+                android:textColor="@color/textboxcolor"
+                android:textSize="10dp"
+                android:theme="@style/txt" />
+
+            <EditText
+                android:id="@+id/editmix3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_above="@+id/rawmix3"
+                android:layout_marginBottom="27dp"
+                android:textColor="@color/textboxcolor"
+
+
+                android:textSize="10dp"
+                android:theme="@style/txt" />
+
+
+        </RelativeLayout>
+
+    <android.support.design.widget.FloatingActionButton
+
+        android:id="@+id/floatbtnmix"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="32dp"
+        android:background="@color/green"
+        android:foregroundGravity="bottom"
+        android:src="@drawable/message"
+        android:theme="@style/floatb"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+</android.support.constraint.ConstraintLayout>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_head"
+        app:menu="@menu/dreawer_menu"
+        />
+
+
+
+
+
+</android.support.v4.widget.DrawerLayout>
+

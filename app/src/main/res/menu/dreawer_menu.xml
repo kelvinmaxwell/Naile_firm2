@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+
+    <item android:title="communicate">
+        <menu>
+            <item android:id="@+id/nav_home"
+                android:icon="@drawable/message"
+                android:title="home"/>
+
+            <item android:id="@+id/nav_login"
+                android:icon="@drawable/message"
+                android:title="login"/>
+        </menu>
+    </item>
+
+    <group android:checkableBehavior="single">
+
+        <item android:id="@+id/nav_get_contents"
+            android:icon="@drawable/message"
+            android:title="get_contents"
+            android:orderInCategory="100"
+            />
+
+        <item android:id="@+id/nav_rawm_entry"
+            android:icon="@drawable/message"
+            android:title="rawm_entry"/>
+
+        <item android:id="@+id/nav_raw_mixing"
+            android:icon="@drawable/message"
+            android:title="raw_mixing"
+            />
+    </group>
+
+
+
+</menu>
