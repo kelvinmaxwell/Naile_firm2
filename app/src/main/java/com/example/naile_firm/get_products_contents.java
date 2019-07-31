@@ -272,6 +272,14 @@ getdatabtn();
                 Intent i4=new Intent(".home");
                 startActivity(i4);
                 break;
+            case R.id.nav_transist:
+                Intent i5=new Intent(".transist");
+                startActivity(i5);
+                break;
+            case R.id.nav_arriv_chuka:
+                Intent i6=new Intent(".arrivals_chuka");
+                startActivity(i6);
+                break;
 
         }
         mdrawerLayout.closeDrawer(GravityCompat.START);
