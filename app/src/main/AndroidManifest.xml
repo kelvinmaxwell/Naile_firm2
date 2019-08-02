@@ -13,6 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
+        <activity android:name=".status">
+            <intent-filter>
+                <action android:name=".status" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".transist">
             <intent-filter>
                 <action android:name=".transist" />
@@ -20,12 +27,12 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".arrivals_chuka" >
-        <intent-filter>
-            <action android:name=".arrivals_chuka" />
+        <activity android:name=".arrivals_chuka">
+            <intent-filter>
+                <action android:name=".arrivals_chuka" />
 
-            <category android:name="android.intent.category.DEFAULT" />
-        </intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity android:name=".get_products_contents">
             <intent-filter>

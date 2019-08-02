@@ -20,7 +20,7 @@ login();
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent(".home");
+                Intent i=new Intent(".status");
                 startActivity(i);
             }
         });

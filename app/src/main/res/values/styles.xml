@@ -28,8 +28,9 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-<item name="editTextBackground">@color/colorSecondary</item>
-        <item name="editTextColor">@color/stroke</item>
+        <item name="editTextColor">@color/colorPrimary</item>
+<item name="editTextBackground">@color/textboxcolor2</item>
+
     </style>
 
 

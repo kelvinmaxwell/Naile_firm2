@@ -6,8 +6,9 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
-    <color name="stroke">#F0E7EA</color>
+    <color name="stroke">#35407C</color>
     <color name="textboxcolor">#B9B1B1</color>
+    <color name="textboxcolor2">#423E3E</color>
     <color name="green">#25ECBD</color>
     <color name="cardview">#2E2D2D</color>
 </resources>

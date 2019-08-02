@@ -239,6 +239,10 @@ public class transist extends AppCompatActivity implements NavigationView.OnNavi
                 Intent i6=new Intent(".arrivals_chuka");
                 startActivity(i6);
                 break;
+            case R.id.nav_status:
+                Intent i7=new Intent(".status");
+                startActivity(i7);
+                break;
 
         }
         mdrawerLayout.closeDrawer(GravityCompat.START);

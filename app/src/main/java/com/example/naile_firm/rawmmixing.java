@@ -1,5 +1,6 @@
 package com.example.naile_firm;
 
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -25,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -33,6 +35,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,9 +47,9 @@ public class rawmmixing extends AppCompatActivity implements NavigationView.OnNa
     String url = "http://192.168.43.78/www/html/Naile_progect/mix.php";
     final String TAG=this.getClass().getSimpleName();
 
-    public EditText quantitymix1,quantitymix2,quantitymix3,editmix1,editmix2,editmix3;
+    public EditText quantitymix1,quantitymix2,quantitymix3,editmix1,editmix2,editmix3,timet,date;
     ArrayAdapter<CharSequence>adapter;
-    public String namemix1,namemix2,namemix3,quantity1,quantity2,quantity3,desiredString1,desiredString2,typeexpected,desiredString3,mixid;
+    public String timemix,datemix,namemix1,namemix2,namemix3,quantity1,quantity2,quantity3,desiredString1,desiredString2,typeexpected,desiredString3,mixid;
     DrawerLayout mdrawerLayout;
     private Toolbar toolbar;
 
@@ -57,16 +60,20 @@ public class rawmmixing extends AppCompatActivity implements NavigationView.OnNa
         editmix1=findViewById(R.id.editmix1);
         editmix2=findViewById(R.id.editmix2);
         editmix3=findViewById(R.id.editmix3);
+        timet=findViewById(R.id.timetxtmix);
+
+
+
         rootlayout=findViewById(R.id.rootlayout);
 
         quantitymix1=findViewById(R.id.rawmix1);
         quantitymix2=findViewById(R.id.rawmix2);
         quantitymix3=findViewById(R.id.rawmix3);
-        mdrawerLayout=findViewById(R.id.drawerlayout);
+        mdrawerLayout=findViewById(R.id.drawerlayout2);
         toolbar=findViewById(R.id.toolBar2);
 
 
-
+timepicker();
 
         drawable2();
 
@@ -74,6 +81,30 @@ public class rawmmixing extends AppCompatActivity implements NavigationView.OnNa
 
 
     }
+
+    public void timepicker(){
+        timet.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Calendar mcurrentTime = Calendar.getInstance();
+                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mcurrentTime.get(Calendar.MINUTE);
+
+
+                TimePickerDialog mTimePicker;
+                mTimePicker = new TimePickerDialog(rawmmixing.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        timet.setText( selectedHour + ":" + selectedMinute);
+                    }
+                }, hour, minute, true);//Yes 24 hour time
+                mTimePicker.setTitle("Select Time");
+                mTimePicker.show();
+
+            }
+        });}
 
 
 
@@ -164,6 +195,8 @@ public void save_raw_mat_data(){
             namemix1=editmix1.getText().toString();
             namemix2=editmix2.getText().toString();
             namemix3=editmix3.getText().toString();
+            timemix=timet.getText().toString();
+
 
             quantity1= quantitymix1.getText().toString();
             quantity2 = quantitymix2.getText().toString();
@@ -177,6 +210,8 @@ public void save_raw_mat_data(){
             params.put("quantity2", quantity2);
             params.put("quantity3", quantity3);
             params.put("typeexpected", typeexpected);
+            params.put("time", timemix);
+
             params.put("mixid", mixid);
 
             return params;
@@ -240,6 +275,10 @@ public void save_raw_mat_data(){
             case R.id.nav_arriv_chuka:
                 Intent i6=new Intent(".arrivals_chuka");
                 startActivity(i6);
+                break;
+            case R.id.nav_status:
+                Intent i7=new Intent(".status");
+                startActivity(i7);
                 break;
 
         }
