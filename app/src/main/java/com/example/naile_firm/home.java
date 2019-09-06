@@ -16,7 +16,7 @@ import android.widget.Button;
 
 public class home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private Toolbar toolbar;
-    Button btn;
+    Button btnmain,btnchuka,btnb,btnc;
 DrawerLayout mdrawerLayout;
 
     @Override
@@ -25,11 +25,48 @@ DrawerLayout mdrawerLayout;
         setContentView(R.layout.activity_home);
        mdrawerLayout=findViewById(R.id.drawerlayout);
         toolbar=findViewById(R.id.toolBar2);
+        btnmain=findViewById(R.id.main);
+        btnchuka=findViewById(R.id.chuka);
+        btnb=findViewById(R.id.B);
+        btnc=findViewById(R.id.C);
         setSupportActionBar(toolbar);
         //ActionBarDrawerToggle darwertoggle=new ActionBarDrawerToggle(this,mdrawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close);
 
-
+localhome();
         drawableb();
+
+    }
+
+    public void   localhome(){
+        btnchuka.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(".arrivals_chuka");
+                startActivity(i);
+            }
+        });
+
+        btnchuka.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(".arrivals_b");
+                startActivity(i);
+            }
+        });
+        btnchuka.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(".arrivals_c");
+                startActivity(i);
+            }
+        });
+        btnchuka.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(".get_products_contents");
+                startActivity(i);
+            }
+        });
 
     }
 

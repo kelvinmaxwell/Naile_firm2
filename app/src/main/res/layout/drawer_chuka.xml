@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".home"
-    android:id="@+id/drawerlayout"
+    android:id="@+id/drawerlayout_chuka"
     android:fitsSystemWindows="true"
     >
 
@@ -16,34 +16,10 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include
-            layout="@layout/toolbar2"/>
 
-        <Button
-            android:id="@+id/main"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:text="main" />
-
-        <Button
-            android:id="@+id/chuka"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Chuka" />
-
-        <Button
-            android:id="@+id/B"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="B" />
-        <Button
-            android:id="@+id/C"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="C" />
-
-
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></FrameLayout>
     </LinearLayout>
 
 
@@ -54,7 +30,7 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_head"
-        app:menu="@menu/dreawer_menu"
+        app:menu="@menu/drawer_chuka"
         />
 
 </android.support.v4.widget.DrawerLayout>

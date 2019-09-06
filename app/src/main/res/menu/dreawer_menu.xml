@@ -37,6 +37,22 @@
             android:title="arrivals_chuka"
             />
 
+        <item android:title="Arrivals">
+            <menu>
+                <item android:id="@+id/arrivals_chuka"
+                    android:icon="@drawable/message"
+                    android:title="arrivals_chuka"/>
+
+                <item android:id="@+id/arrivals_B"
+                    android:icon="@drawable/message"
+                    android:title="arrivals_B"/>
+                <item android:id="@+id/ar_C"
+                    android:icon="@drawable/message"
+                    android:title="arrivals_C"/>
+            </menu>
+        </item>
+
+
 
     </group>
     <item android:title="status">

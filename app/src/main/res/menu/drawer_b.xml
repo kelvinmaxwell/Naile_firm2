@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+
+
+    <item android:id="@+id/nav_home"
+        android:icon="@drawable/message"
+        android:title="home"/>
+
+    <item android:id="@+id/nav_arriv_B"
+        android:icon="@drawable/message"
+        android:title="arrivals_chuka"
+        />
+
+    <item android:id="@+id/status_B"
+        android:icon="@drawable/message"
+        android:title="status_chuka"/>
+    <item android:title="communicate">
+        <menu>
+            <item android:id="@+id/messages"
+                android:icon="@drawable/message"
+                android:title="messages"/>
+
+            <item android:id="@+id/nav_balances"
+                android:icon="@drawable/message"
+                android:title="balances"/>
+        </menu>
+    </item>
+
+</menu>
