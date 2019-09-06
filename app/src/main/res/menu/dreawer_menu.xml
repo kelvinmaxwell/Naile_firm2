@@ -21,7 +21,7 @@
         <item android:id="@+id/nav_get_contents"
             android:icon="@drawable/message"
             android:title="get_contents"
-            android:orderInCategory="100"
+
             />
 
         <item android:id="@+id/nav_rawm_entry"
@@ -36,12 +36,23 @@
             android:icon="@drawable/message"
             android:title="arrivals_chuka"
             />
-        <item android:id="@+id/nav_status"
-            android:icon="@drawable/message"
-            android:title="status"
-            />
+
 
     </group>
+    <item android:title="status">
+        <menu>
+            <item android:id="@+id/status_chuka"
+                android:icon="@drawable/message"
+                android:title="status_chuka"/>
+
+            <item android:id="@+id/status_B"
+                android:icon="@drawable/message"
+                android:title="status_B"/>
+            <item android:id="@+id/status_C"
+                android:icon="@drawable/message"
+                android:title="status_C"/>
+        </menu>
+    </item>
 
 
 

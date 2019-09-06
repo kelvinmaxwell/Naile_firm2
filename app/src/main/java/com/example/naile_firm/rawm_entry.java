@@ -239,7 +239,7 @@ startActivity(i);
                 Intent i6=new Intent(".arrivals_chuka");
                 startActivity(i6);
                 break;
-            case R.id.nav_status:
+            case R.id.status_chuka:
                 Intent i7=new Intent(".status");
                 startActivity(i7);
                 break;
