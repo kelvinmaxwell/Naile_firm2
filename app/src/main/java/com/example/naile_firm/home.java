@@ -46,24 +46,24 @@ localhome();
             }
         });
 
-        btnchuka.setOnClickListener(new View.OnClickListener() {
+        btnb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i=new Intent(".arrivals_b");
                 startActivity(i);
             }
         });
-        btnchuka.setOnClickListener(new View.OnClickListener() {
+        btnc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i=new Intent(".arrivals_c");
                 startActivity(i);
             }
         });
-        btnchuka.setOnClickListener(new View.OnClickListener() {
+        btnmain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent(".get_products_contents");
+                Intent i=new Intent(".rawm_entry");
                 startActivity(i);
             }
         });

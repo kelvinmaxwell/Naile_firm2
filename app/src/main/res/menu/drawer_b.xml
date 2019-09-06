@@ -11,12 +11,12 @@
 
     <item android:id="@+id/nav_arriv_B"
         android:icon="@drawable/message"
-        android:title="arrivals_chuka"
+        android:title="arrivals_B"
         />
 
     <item android:id="@+id/status_B"
         android:icon="@drawable/message"
-        android:title="status_chuka"/>
+        android:title="status_B"/>
     <item android:title="communicate">
         <menu>
             <item android:id="@+id/messages"

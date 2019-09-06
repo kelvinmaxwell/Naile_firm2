@@ -10,14 +10,14 @@
         android:title="home"/>
 
 
-    <item android:id="@+id/nav_arriv_chuka"
+    <item android:id="@+id/nav_arriv_c"
         android:icon="@drawable/message"
-        android:title="arrivals_chuka"
+        android:title="arrivals_C"
         />
 
-    <item android:id="@+id/status_chuka"
+    <item android:id="@+id/status_c"
         android:icon="@drawable/message"
-        android:title="status_chuka"/>
+        android:title="status_C"/>
     <item android:title="communicate">
         <menu>
             <item android:id="@+id/messages"

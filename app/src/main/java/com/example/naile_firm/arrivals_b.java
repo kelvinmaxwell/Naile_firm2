@@ -60,7 +60,7 @@ public class arrivals_b extends AppCompatActivity implements NavigationView.OnNa
         datetxt=findViewById(R.id.arrivdatetxtb);
         timetxt=findViewById(R.id.arrivtimetxtb);
         idtxt=findViewById(R.id.arrividtxtb);
-        mdrawerLayout=findViewById(R.id.drawerlayout);
+        mdrawerLayout=findViewById(R.id.drawerlayout_b);
         toolbar=findViewById(R.id.toolBar2);
 
         drawable2();
@@ -161,7 +161,7 @@ public class arrivals_b extends AppCompatActivity implements NavigationView.OnNa
 
     public void save_raw_mat_data() {
 
-        myFab = findViewById(R.id.arrivfloatbtn);
+        myFab = findViewById(R.id.arrivfloatbtnb);
         myFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
@@ -209,7 +209,7 @@ public class arrivals_b extends AppCompatActivity implements NavigationView.OnNa
         ActionBarDrawerToggle darwertoggle=new ActionBarDrawerToggle(this,mdrawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close);
         mdrawerLayout.addDrawerListener(darwertoggle);
         darwertoggle.syncState();
-        NavigationView nav_view=findViewById(R.id.nav_view);
+        NavigationView nav_view=findViewById(R.id.nav_viewb);
         nav_view.setNavigationItemSelectedListener(this);
     }
 
@@ -217,34 +217,19 @@ public class arrivals_b extends AppCompatActivity implements NavigationView.OnNa
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
         switch (menuItem.getItemId()){
-            case R.id.nav_rawm_entry:
-                Intent i=new Intent(".rawm_entry");
+            case R.id.nav_home:
+                Intent i=new Intent(".home");
                 startActivity(i);
                 break;
-            case R.id.nav_raw_mixing:
-                Intent i2=new Intent(".rawmmixing");
+            case R.id.nav_arriv_B:
+                Intent i2=new Intent(".arrivals_b");
                 startActivity(i2);
                 break;
-            case R.id.nav_get_contents:
-                Intent i3=new Intent(".get_products_contents");
+            case R.id.status_B:
+                Intent i3=new Intent(".status_b");
                 startActivity(i3);
                 break;
-            case R.id.nav_home:
-                Intent i4=new Intent(".home");
-                startActivity(i4);
-                break;
-            case R.id.nav_transist:
-                Intent i5=new Intent(".transist");
-                startActivity(i5);
-                break;
-            case R.id.nav_arriv_chuka:
-                Intent i6=new Intent(".arrivals_chuka");
-                startActivity(i6);
-                break;
-            case R.id.status_chuka:
-                Intent i7=new Intent(".status");
-                startActivity(i7);
-                break;
+
 
         }
         mdrawerLayout.closeDrawer(GravityCompat.START);

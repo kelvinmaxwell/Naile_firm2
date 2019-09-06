@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".arrivals_chuka"
-    android:id="@+id/drawerlayout"
+    android:id="@+id/drawerlayout_chuka"
     android:fitsSystemWindows="true"
     >
 
@@ -119,13 +119,13 @@
 
 
     <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
+        android:id="@+id/nav_viewchuka"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_head"
-        app:menu="@menu/dreawer_menu"
+        app:menu="@menu/drawer_chuka"
         />
 
 </android.support.v4.widget.DrawerLayout>

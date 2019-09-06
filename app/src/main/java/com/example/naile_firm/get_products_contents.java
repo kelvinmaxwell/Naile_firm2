@@ -46,7 +46,7 @@ public class get_products_contents extends AppCompatActivity  implements Navigat
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_products_contents);
         lvProduct=findViewById(R.id.listview);
-        mdrawerLayout=findViewById(R.id.drawerlayout2);
+        mdrawerLayout=findViewById(R.id.drawerlayout);
         toolbar=findViewById(R.id.toolBar2);
         setSupportActionBar(toolbar);
 
