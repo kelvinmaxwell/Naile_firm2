@@ -19,5 +19,6 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
     <string name="title_activity_arrivals_b">arrivals_b</string>
+    <string name="title_activity_trans_b">trans_b</string>
 </resources>
 

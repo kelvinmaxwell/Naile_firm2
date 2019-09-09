@@ -163,8 +163,7 @@ public class transist extends AppCompatActivity implements NavigationView.OnNavi
         myFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                Intent i=new Intent(".rawmmixing");
-                startActivity(i);
+                Toast.makeText(getApplicationContext(), "SAVED", Toast.LENGTH_SHORT).show();
 
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                     @Override
@@ -231,10 +230,8 @@ public class transist extends AppCompatActivity implements NavigationView.OnNavi
                 Intent i4=new Intent(".home");
                 startActivity(i4);
                 break;
-            case R.id.nav_transist:
-                Intent i5=new Intent(".transist");
-                startActivity(i5);
-                break;
+
+
             case R.id.nav_arriv_chuka:
                 Intent i6=new Intent(".arrivals_chuka");
                 startActivity(i6);
@@ -242,6 +239,14 @@ public class transist extends AppCompatActivity implements NavigationView.OnNavi
             case R.id.status_chuka:
                 Intent i7=new Intent(".status");
                 startActivity(i7);
+                break;
+            case R.id.status_B:
+                Intent i11=new Intent(".status_b");
+                startActivity(i11);
+                break;
+            case R.id.status_C:
+                Intent i12=new Intent(".status_c");
+                startActivity(i12);
                 break;
 
         }

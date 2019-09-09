@@ -45,7 +45,7 @@ public class arrivals_c extends AppCompatActivity implements NavigationView.OnNa
     public EditText typetxt,quantitytxt,timetxt,datetxt,idtxt;
     public FloatingActionButton myFab;
     final String TAG=this.getClass().getSimpleName();
-    String url = "http://192.168.43.78/www/html/Naile_progect/arrivchuka.php";
+    String url = "http://192.168.43.78/www/html/Naile_progect/arriv_c.php";
     DrawerLayout mdrawerLayout;
     private Toolbar toolbar;
 
@@ -165,9 +165,8 @@ public class arrivals_c extends AppCompatActivity implements NavigationView.OnNa
         myFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                Intent i=new Intent(".rawmmixing");
-                startActivity(i);
 
+                Toast.makeText(getApplicationContext(), "SAVED", Toast.LENGTH_SHORT).show();
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -222,11 +221,11 @@ public class arrivals_c extends AppCompatActivity implements NavigationView.OnNa
                 startActivity(i);
                 break;
             case R.id.nav_arriv_c:
-                Intent i2=new Intent(".rawmmixing");
+                Intent i2=new Intent(".arrivals_c");
                 startActivity(i2);
                 break;
             case R.id.status_c:
-                Intent i3=new Intent(".get_products_contents");
+                Intent i3=new Intent(".status_c");
                 startActivity(i3);
                 break;
 

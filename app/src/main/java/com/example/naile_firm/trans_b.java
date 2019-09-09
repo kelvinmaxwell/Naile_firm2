@@ -1,7 +1,5 @@
 package com.example.naile_firm;
 
-
-
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -37,7 +35,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class arrivals_chuka extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class trans_b extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     final Calendar myCalendar = Calendar.getInstance();
     Spinner rawmatspinner;
     ArrayAdapter<CharSequence>adapter;
@@ -45,7 +43,7 @@ public class arrivals_chuka extends AppCompatActivity implements NavigationView.
     public EditText typetxt,quantitytxt,timetxt,datetxt,idtxt;
     public FloatingActionButton myFab;
     final String TAG=this.getClass().getSimpleName();
-    String url = "http://192.168.43.78/www/html/Naile_progect/arrivchuka.php";
+    String url = "http://192.168.43.78/www/html/Naile_progect/trans_b.php";
     DrawerLayout mdrawerLayout;
     private Toolbar toolbar;
 
@@ -53,14 +51,14 @@ public class arrivals_chuka extends AppCompatActivity implements NavigationView.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_arrivals_chuka);
-        rawmatspinner=findViewById(R.id.arrivspinner);
-        typetxt=findViewById(R.id.arrivtypetxt);
-        quantitytxt=findViewById(R.id.arrivquantitytxt);
-        datetxt=findViewById(R.id.arrivdatetxt);
-        timetxt=findViewById(R.id.arrivtimetxt);
-        idtxt=findViewById(R.id.arrividtxt);
-        mdrawerLayout=findViewById(R.id.drawerlayout_chuka);
+        setContentView(R.layout.activity_trans_b);
+        rawmatspinner=findViewById(R.id.transspinnerb);
+        typetxt=findViewById(R.id.transtypetxtb);
+        quantitytxt=findViewById(R.id.transquantitytxtb);
+        datetxt=findViewById(R.id.transdatetxtb);
+        timetxt=findViewById(R.id.transtimetxtb);
+        idtxt=findViewById(R.id.transidtxtb);
+        mdrawerLayout=findViewById(R.id.drawerlayout);
         toolbar=findViewById(R.id.toolBar2);
 
         drawable2();
@@ -84,7 +82,7 @@ public class arrivals_chuka extends AppCompatActivity implements NavigationView.
 
 
                 TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(arrivals_chuka.this, new TimePickerDialog.OnTimeSetListener() {
+                mTimePicker = new TimePickerDialog(trans_b.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         timetxt.setText( selectedHour + ":" + selectedMinute);
@@ -120,7 +118,7 @@ public class arrivals_chuka extends AppCompatActivity implements NavigationView.
             public void onClick(View v) {
 
                 // TODO Auto-generated method stub
-                new DatePickerDialog(arrivals_chuka.this, date, myCalendar
+                new DatePickerDialog(trans_b.this, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
@@ -161,11 +159,12 @@ public class arrivals_chuka extends AppCompatActivity implements NavigationView.
 
     public void save_raw_mat_data() {
 
-        myFab = findViewById(R.id.arrivfloatbtn);
+        myFab = findViewById(R.id.transfloatbtnb);
         myFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
                 Toast.makeText(getApplicationContext(), "SAVED", Toast.LENGTH_SHORT).show();
+
 
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                     @Override
@@ -197,10 +196,9 @@ public class arrivals_chuka extends AppCompatActivity implements NavigationView.
                         return params;
                     }
                 };
-                MySingleton.getInstance(arrivals_chuka .this).addToRequestQueue(stringRequest);}
+                MySingleton.getInstance(trans_b .this).addToRequestQueue(stringRequest);}
 
         });
-
 
     }
     public void drawable2(){
@@ -208,7 +206,7 @@ public class arrivals_chuka extends AppCompatActivity implements NavigationView.
         ActionBarDrawerToggle darwertoggle=new ActionBarDrawerToggle(this,mdrawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close);
         mdrawerLayout.addDrawerListener(darwertoggle);
         darwertoggle.syncState();
-        NavigationView nav_view=findViewById(R.id.nav_viewchuka);
+        NavigationView nav_view=findViewById(R.id.nav_view);
         nav_view.setNavigationItemSelectedListener(this);
     }
 
@@ -216,22 +214,50 @@ public class arrivals_chuka extends AppCompatActivity implements NavigationView.
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
         switch (menuItem.getItemId()){
-            case R.id.nav_home:
-                Intent i=new Intent(".home");
+            case R.id.nav_rawm_entry:
+                Intent i=new Intent(".rawm_entry");
                 startActivity(i);
                 break;
-            case R.id.nav_arriv_chuka:
-                Intent i2=new Intent(".arrivals_chuka");
+            case R.id.nav_raw_mixing:
+                Intent i2=new Intent(".rawmmixing");
                 startActivity(i2);
                 break;
-            case R.id.status_chuka:
-                Intent i3=new Intent(".status");
+            case R.id.nav_get_contents:
+                Intent i3=new Intent(".get_products_contents");
                 startActivity(i3);
                 break;
-
-
-
-
+            case R.id.nav_home:
+                Intent i4=new Intent(".home");
+                startActivity(i4);
+                break;
+            case R.id.trans_chuka:
+                Intent i8=new Intent(".transist");
+                startActivity(i8);
+                break;
+            case R.id.transist_B:
+                Intent i9=new Intent(".trans_b");
+                startActivity(i9);
+                break;
+            case R.id.transist_C:
+                Intent i10=new Intent(".trans_c");
+                startActivity(i10);
+                break;
+            case R.id.nav_arriv_chuka:
+                Intent i6=new Intent(".arrivals_chuka");
+                startActivity(i6);
+                break;
+            case R.id.status_chuka:
+                Intent i7=new Intent(".status");
+                startActivity(i7);
+                break;
+            case R.id.status_B:
+                Intent i11=new Intent(".status_b");
+                startActivity(i11);
+                break;
+            case R.id.status_C:
+                Intent i12=new Intent(".status_c");
+                startActivity(i12);
+                break;
 
         }
         mdrawerLayout.closeDrawer(GravityCompat.START);

@@ -10,9 +10,7 @@
                 android:icon="@drawable/message"
                 android:title="home"/>
 
-            <item android:id="@+id/nav_transist"
-                android:icon="@drawable/message"
-                android:title="transist"/>
+
         </menu>
     </item>
 
@@ -32,29 +30,28 @@
             android:icon="@drawable/message"
             android:title="raw_mixing"
             />
-        <item android:id="@+id/nav_arriv_chuka"
-            android:icon="@drawable/message"
-            android:title="arrivals_chuka"
-            />
 
-        <item android:title="Arrivals">
-            <menu>
-                <item android:id="@+id/arrivals_chuka"
-                    android:icon="@drawable/message"
-                    android:title="arrivals_chuka"/>
 
-                <item android:id="@+id/arrivals_B"
-                    android:icon="@drawable/message"
-                    android:title="arrivals_B"/>
-                <item android:id="@+id/ar_C"
-                    android:icon="@drawable/message"
-                    android:title="arrivals_C"/>
-            </menu>
-        </item>
+
 
 
 
     </group>
+
+    <item android:title="transist">
+        <menu>
+            <item android:id="@+id/trans_chuka"
+                android:icon="@drawable/message"
+                android:title="trans_chuka"/>
+
+            <item android:id="@+id/transist_B"
+                android:icon="@drawable/message"
+                android:title="trans_B"/>
+            <item android:id="@+id/transist_C"
+                android:icon="@drawable/message"
+                android:title="trans_C"/>
+        </menu>
+    </item>
     <item android:title="status">
         <menu>
             <item android:id="@+id/status_chuka"

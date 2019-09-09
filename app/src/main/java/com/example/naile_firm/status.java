@@ -45,10 +45,10 @@ public class status extends AppCompatActivity implements NavigationView.OnNaviga
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status);
-        mdrawerLayout=findViewById(R.id.drawerlayoutstatus);
+        mdrawerLayout=findViewById(R.id.drawerlayout_chuka);
         toolbar=findViewById(R.id.toolBar2);
         spinner=findViewById(R.id.spinnerstatus);
-        drawableb();
+        drawable2();
 
         retrieveJSON();
     }
@@ -59,12 +59,12 @@ public class status extends AppCompatActivity implements NavigationView.OnNaviga
 
 
 
-    public void drawableb(){
-        NavigationView nav_view=findViewById(R.id.nav_view);
+    public void drawable2(){
+
         ActionBarDrawerToggle darwertoggle=new ActionBarDrawerToggle(this,mdrawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close);
         mdrawerLayout.addDrawerListener(darwertoggle);
         darwertoggle.syncState();
-
+        NavigationView nav_view=findViewById(R.id.nav_viewchuka);
         nav_view.setNavigationItemSelectedListener(this);
     }
 
@@ -72,34 +72,33 @@ public class status extends AppCompatActivity implements NavigationView.OnNaviga
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
         switch (menuItem.getItemId()){
-            case R.id.nav_rawm_entry:
-                Intent i=new Intent(".rawm_entry");
+            case R.id.nav_home:
+                Intent i=new Intent(".home");
                 startActivity(i);
                 break;
-            case R.id.nav_raw_mixing:
-                Intent i2=new Intent(".rawmmixing");
+            case R.id.nav_arriv_chuka:
+                Intent i2=new Intent(".arrivals_chuka");
                 startActivity(i2);
                 break;
-            case R.id.nav_get_contents:
-                Intent i3=new Intent(".get_products_contents");
+            case R.id.status_chuka:
+                Intent i3=new Intent(".status");
                 startActivity(i3);
                 break;
-            case R.id.nav_home:
-                Intent i4=new Intent(".home");
-                startActivity(i4);
+
+            case R.id.trans_chuka:
+                Intent i8=new Intent(".transist");
+                startActivity(i8);
                 break;
-            case R.id.nav_transist:
-                Intent i5=new Intent(".transist");
-                startActivity(i5);
+            case R.id.transist_B:
+                Intent i9=new Intent(".trans_b");
+                startActivity(i9);
                 break;
-            case R.id.nav_arriv_chuka:
-                Intent i6=new Intent(".arrivals_chuka");
-                startActivity(i6);
+            case R.id.transist_C:
+                Intent i10=new Intent(".trans_c");
+                startActivity(i10);
                 break;
-            case R.id.status_chuka:
-                Intent i7=new Intent(".status");
-                startActivity(i7);
-                break;
+
+
 
         }
         mdrawerLayout.closeDrawer(GravityCompat.START);
@@ -112,6 +111,7 @@ public class status extends AppCompatActivity implements NavigationView.OnNaviga
             mdrawerLayout.closeDrawer(GravityCompat.START);
         } else{
             super.onBackPressed();}
+
 
     }
 
