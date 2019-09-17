@@ -127,6 +127,10 @@ localhome();
                 Intent i12=new Intent(".status_b");
                 startActivity(i12);
                 break;
+            case R.id.addproduct:
+                Intent i13=new Intent(".addproducts");
+                startActivity(i13);
+                break;
 
         }
         mdrawerLayout.closeDrawer(GravityCompat.START);

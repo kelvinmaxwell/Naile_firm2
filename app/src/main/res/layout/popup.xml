@@ -17,11 +17,11 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/textboxcolor"
         android:theme="@style/txt"
-        app:layout_constraintBottom_toTopOf="@+id/etUserInput"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerpop"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <EditText
-        android:id="@+id/etUserInput"
+    <android.support.v7.widget.AppCompatSpinner
+        android:id="@+id/spinnerpop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
@@ -32,6 +32,6 @@
 
         <requestFocus />
 
-    </EditText>
+    </android.support.v7.widget.AppCompatSpinner>
 
 </android.support.constraint.ConstraintLayout>

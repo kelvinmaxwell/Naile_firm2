@@ -13,23 +13,28 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
+        <activity android:name=".packaging"></activity>
+        <activity android:name=".addproducts">
+            <intent-filter>
+                <action android:name=".addproducts" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".trans_c">
             <intent-filter>
                 <action android:name=".trans_c" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
         </activity>
-        <activity
-            android:name=".trans_b"
-            ><intent-filter>
-        <action android:name=".trans_b" />
+        <activity android:name=".trans_b">
+            <intent-filter>
+                <action android:name=".trans_b" />
 
-        <category android:name="android.intent.category.DEFAULT" />
-    </intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".arrivals_c">
             <intent-filter>
                 <action android:name=".arrivals_c" />

@@ -197,11 +197,7 @@ drawable2();
            };
                    MySingleton.getInstance(rawm_entry .this).addToRequestQueue(stringRequest);}
 
-       });
-
-
-
-   }
+       }); }
     public void drawable2(){
 
         ActionBarDrawerToggle darwertoggle=new ActionBarDrawerToggle(this,mdrawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close);

@@ -1,6 +1,8 @@
 package com.example.naile_firm;
 
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -31,27 +33,44 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+
+
+import java.util.ArrayList;
+
+import static android.R.layout.simple_spinner_item;
 
 public class rawmmixing extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     ConstraintLayout rootlayout;
     FloatingActionButton fbtnmix;
-
+    private static ProgressDialog mProgressDialog;
     String url = "http://192.168.43.78/www/html/Naile_progect/mix.php";
+    String url2 = "http://192.168.43.78/www/html/Naile_progect/get_products.php";
     final String TAG=this.getClass().getSimpleName();
+    private ArrayList<products2> statuscheckArrayList;
+    private ArrayList<String> names = new ArrayList<String>();
+   public Spinner spinner;
 
     public EditText quantitymix1,quantitymix2,quantitymix3,editmix1,editmix2,editmix3,timet,date;
     ArrayAdapter<CharSequence>adapter;
     public String timemix,datemix,namemix1,namemix2,namemix3,quantity1,quantity2,quantity3,desiredString1,desiredString2,typeexpected,desiredString3,mixid;
     DrawerLayout mdrawerLayout;
     private Toolbar toolbar;
+    public String idtype;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +80,6 @@ public class rawmmixing extends AppCompatActivity implements NavigationView.OnNa
         editmix2=findViewById(R.id.editmix2);
         editmix3=findViewById(R.id.editmix3);
         timet=findViewById(R.id.timetxtmix);
-
-
 
         rootlayout=findViewById(R.id.rootlayout);
 
@@ -120,8 +137,9 @@ public void popup(){
 
         // set alert_dialog.xml to alertdialog builder
         alertDialogBuilder.setView(promptsView);
+    spinner = (Spinner) promptsView
+            .findViewById(R.id.spinnerpop);
 
-      final  EditText userInput = (EditText) promptsView.findViewById(R.id.etUserInput);
 
         // set dialog message
         alertDialogBuilder
@@ -130,13 +148,9 @@ public void popup(){
                     public void onClick(DialogInterface dialog, int id) {
                         // get user input and set it to result
                         // edit text
-                    String goodname=userInput.getText().toString();
-                        Toast.makeText(getApplicationContext(), "Entered: "+goodname, Toast.LENGTH_LONG).show();
-                        typeexpected=goodname;
-                        save_raw_mat_data();
 
-                        Intent i=new Intent(".get_products_contents");
-                        startActivity(i);
+                        idgeneration();
+                        save_raw_mat_data();
 
                     }
                 })
@@ -173,6 +187,93 @@ public void idgeneration(){
 
     }
 
+
+
+
+  private void getjson(){
+
+
+            showSimpleProgressDialog(this, "Loading...","Fetching Json",false);
+
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url2,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                            Log.d("strrrrr", ">>" + response);
+
+
+                            try {
+
+                                JSONObject obj = new JSONObject(response);
+                                if(obj.optString("status").equals("true")){
+
+                                    statuscheckArrayList = new ArrayList<>();
+                                    JSONArray dataArray  = obj.getJSONArray("data");
+
+                                    for (int i = 0; i < dataArray.length(); i++) {
+
+                                        products2 playerModel = new products2();
+                                        JSONObject dataobj = dataArray.getJSONObject(i);
+
+                                        playerModel.setId(dataobj.getString("id"));
+                                        playerModel.setproductName(dataobj.getString("productname"));
+
+
+                                        statuscheckArrayList.add(playerModel);
+
+                                    }
+
+                                    for (int i = 0; i < statuscheckArrayList.size(); i++){
+                                        names.add(statuscheckArrayList.get(i).getproductName());
+                                        idtype=(statuscheckArrayList.get(i).getId());
+                                    }
+
+
+                                    ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(rawmmixing.this,simple_spinner_item, names);
+                                    spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
+                                    spinner.setAdapter(spinnerArrayAdapter);
+                                    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                        @Override
+                                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                            String slectedname = parent.getItemAtPosition(position).toString();
+
+                                            Toast.makeText(getApplicationContext(), "Entered: "+slectedname, Toast.LENGTH_LONG).show();
+                                            typeexpected=slectedname;
+
+                                        }
+
+                                        @Override
+                                        public void onNothingSelected(AdapterView<?> parent) {
+
+                                        }
+                                    });
+                                    removeSimpleProgressDialog();
+
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            //displaying the error in toast if occurrs
+                            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+            // request queue
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+            requestQueue.add(stringRequest);
+
+
+
+    }
+
 public void save_raw_mat_data(){
     StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
         @Override
@@ -190,29 +291,25 @@ public void save_raw_mat_data(){
         @Override
         protected Map<String, String> getParams() throws AuthFailureError {
             Map<String, String> params = new HashMap<String, String>();
+namemix1=editmix1.getText().toString();
+namemix2=editmix2.getText().toString();
+namemix3=editmix3.getText().toString();
+quantity1=quantitymix1.getText().toString();
+quantity2=quantitymix2.getText().toString();
+quantity3=quantitymix3.getText().toString();
+   timemix=timet.getText().toString();
+   params.put("namemix1",namemix1);
+            params.put("namemix2",namemix2);
+            params.put("namemix3",namemix3);
+            params.put("quantity1",quantity1);
+            params.put("quantity2",quantity2);
+            params.put("quantity3",quantity3);
+            params.put("time",timemix);
 
-
-            namemix1=editmix1.getText().toString();
-            namemix2=editmix2.getText().toString();
-            namemix3=editmix3.getText().toString();
-            timemix=timet.getText().toString();
-
-
-            quantity1= quantitymix1.getText().toString();
-            quantity2 = quantitymix2.getText().toString();
-            quantity3 = quantitymix3.getText().toString();
-
-
-            params.put("namemix1", namemix1);
-            params.put("namemix2", namemix2);
-            params.put("namemix3", namemix3);
-            params.put("quantity1", quantity1);
-            params.put("quantity2", quantity2);
-            params.put("quantity3", quantity3);
             params.put("typeexpected", typeexpected);
-            params.put("time", timemix);
 
-            params.put("mixid", mixid);
+
+           params.put("mixid", mixid);
 
             return params;
         }
@@ -221,6 +318,48 @@ public void save_raw_mat_data(){
 
     Snackbar.make(rootlayout,"data saved succesfully",Snackbar.LENGTH_SHORT).show();
 }
+    public static void removeSimpleProgressDialog() {
+        try {
+            if (mProgressDialog != null) {
+                if (mProgressDialog.isShowing()) {
+                    mProgressDialog.dismiss();
+                    mProgressDialog = null;
+                }
+            }
+        } catch (IllegalArgumentException ie) {
+            ie.printStackTrace();
+
+        } catch (RuntimeException re) {
+            re.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void showSimpleProgressDialog(Context context, String title,
+                                                String msg, boolean isCancelable) {
+        try {
+            if (mProgressDialog == null) {
+                mProgressDialog = ProgressDialog.show(context, title, msg);
+                mProgressDialog.setCancelable(isCancelable);
+            }
+
+            if (!mProgressDialog.isShowing()) {
+                mProgressDialog.show();
+            }
+
+        } catch (IllegalArgumentException ie) {
+            ie.printStackTrace();
+        } catch (RuntimeException re) {
+            re.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 
 
 
@@ -230,8 +369,11 @@ public void save_raw_mat_data(){
         fbtnmix.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                idgeneration();
-                popup();
+
+
+              popup();
+getjson();
+
                 Toast.makeText(getApplicationContext(), "SAVED", Toast.LENGTH_SHORT).show();
 
 
