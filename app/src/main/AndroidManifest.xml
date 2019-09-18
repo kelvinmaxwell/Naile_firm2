@@ -13,7 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
-        <activity android:name=".packaging"></activity>
+        <activity android:name=".packaging">
+            <intent-filter>
+                <action android:name=".packaging" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".addproducts">
             <intent-filter>
                 <action android:name=".addproducts" />

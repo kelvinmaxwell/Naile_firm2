@@ -131,6 +131,10 @@ localhome();
                 Intent i13=new Intent(".addproducts");
                 startActivity(i13);
                 break;
+            case R.id.productgen:
+                Intent i14=new Intent(".packaging");
+                startActivity(i14);
+                break;
 
         }
         mdrawerLayout.closeDrawer(GravityCompat.START);

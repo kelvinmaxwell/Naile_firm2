@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/index"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="22dp"
+        android:hint="Raw_type"
+        android:paddingTop="10dp"
+
+        android:fontFamily="sans-serif-black"
+
+        android:textColor="@color/textboxcolor"
+        android:textSize="10dp"
+        android:theme="@style/txt2" />
+
+
+
+    <TextView
+        android:id="@+id/index1"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_alignTop="@+id/namemix2"
+
+        android:layout_marginTop="89dp"
+        android:hint="quantity"
+        android:paddingTop="10dp"
+        android:textColor="@color/textboxcolor"
+        android:textSize="10dp"
+        android:theme="@style/txt" />
+
+    <TextView
+        android:id="@+id/id"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="11dp"
+        android:hint="quantity"
+        android:fontFamily="sans-serif-black"
+        android:paddingTop="10dp"
+        android:textColor="#F7F3F3"
+        android:textSize="10dp"
+        android:theme="@style/txt2"
+        android:visibility="visible" />
+
+
+    <TextView
+        android:id="@+id/id1"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="76dp"
+        android:layout_marginEnd="11dp"
+        android:hint="textview"
+        android:paddingTop="10dp"
+        android:textColor="@color/textboxcolor"
+        android:textSize="10dp"
+        android:theme="@style/txt"
+        android:visibility="visible" />
+
+
+</RelativeLayout>
