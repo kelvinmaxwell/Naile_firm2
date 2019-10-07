@@ -35,7 +35,8 @@
             android:background="@drawable/rounded_corner"
             android:text="packaging"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/include2" />
+            app:layout_constraintTop_toBottomOf="@+id/include2"
+            tools:visibility="visible" />
 
         <EditText
             android:id="@+id/getidpack"
@@ -44,9 +45,10 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="176dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="number of bags"
+            android:inputType="number"
+            android:hint="total number of bags "
             android:textSize="10dp"
+
             android:theme="@style/txt"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/include2" />
@@ -102,7 +104,7 @@
 
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/changestatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="456dp"
@@ -111,6 +113,17 @@
             android:text="pacjaging complete"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/spinnerpack" />
+
+        <TextView
+            android:id="@+id/invicible1"
+            android:layout_width="wrap_content"
+            android:layout_height="11dp"
+            android:layout_marginStart="38dp"
+            android:layout_marginTop="2dp"
+            android:text="TextView"
+            app:layout_constraintStart_toEndOf="@+id/include2"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            tools:visibility="invisible" />
 
     </android.support.constraint.ConstraintLayout>
     <android.support.design.widget.NavigationView

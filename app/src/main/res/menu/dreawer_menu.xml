@@ -11,7 +11,7 @@
                 android:title="home"/>
             <item android:id="@+id/productgen"
                 android:icon="@drawable/message"
-                android:title="productgen"/>
+                android:title="productgeneration"/>
 
 
         </menu>
@@ -21,20 +21,20 @@
 
         <item android:id="@+id/nav_get_contents"
             android:icon="@drawable/message"
-            android:title="get_contents"
+            android:title="get_product_contents"
 
             />
 
         <item android:id="@+id/nav_rawm_entry"
             android:icon="@drawable/message"
-            android:title="rawm_entry"/>
+            android:title="feed_raw materials"/>
 
         <item android:id="@+id/nav_raw_mixing"
             android:icon="@drawable/message"
-            android:title="raw_mixing"/>
+            android:title="raw_material_mixing"/>
         <item android:id="@+id/addproduct"
             android:icon="@drawable/message"
-            android:title="add product"
+            android:title="add product_description"
             />
 
 

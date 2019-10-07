@@ -5,6 +5,9 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -94,9 +97,53 @@ timepicker();
 
         drawable2();
 
-        floatbtn();
+        checkconn();
+secs();
+
+    }
+    public void secs(){
+        final Handler handler = new Handler();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                checkconn2();
+                handler.postDelayed(this, 10000);
+            }
+        }, 10000);
+    }
 
 
+
+
+    public void  checkconn2(){
+        ConnectivityManager conMgr = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if ( conMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED
+                || conMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED ) {
+
+
+
+
+        }
+        else if ( conMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.DISCONNECTED
+                || conMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.DISCONNECTED) {
+
+            Toast.makeText(getApplicationContext(), "YOU ARE OFFLINE", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void  checkconn(){
+        ConnectivityManager conMgr = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if ( conMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED
+                || conMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED ) {
+            floatbtn();
+        }
+        else if ( conMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.DISCONNECTED
+                || conMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.DISCONNECTED) {
+
+            Toast.makeText(getApplicationContext(), "YOU ARE OFFLINE", Toast.LENGTH_LONG).show();
+        }
     }
 
     public void timepicker(){
@@ -368,15 +415,21 @@ quantity3=quantitymix3.getText().toString();
         fbtnmix = findViewById(R.id.floatbtnmix);
         fbtnmix.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                if(editmix1.getText().toString().equals("")||editmix2.getText().toString().equals("")||editmix3.getText().toString().equals("")||quantitymix1.getText().toString().equals("")||quantitymix2.getText().toString().equals("")||quantitymix3.getText().toString().equals("")||timet.getText().toString().equals("")) {
+                    Toast.makeText(getApplicationContext(), "fill in the missing field", Toast.LENGTH_SHORT).show();}
+
+                else  if(editmix1.getText().toString().length()<4||editmix2.getText().toString().length()<4||editmix3.getText().toString().length()<4){
+                    Toast.makeText(getApplicationContext(), "please check the values of ur id and try again", Toast.LENGTH_LONG).show();
+                }
+                else {
 
 
+                    popup();
+                    getjson();
 
-              popup();
-getjson();
+                    Toast.makeText(getApplicationContext(), "SAVED", Toast.LENGTH_SHORT).show();
 
-                Toast.makeText(getApplicationContext(), "SAVED", Toast.LENGTH_SHORT).show();
-
-
+                }
 
 
             }

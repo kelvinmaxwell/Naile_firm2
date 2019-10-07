@@ -17,7 +17,10 @@
 
         <include
             android:id="@+id/include5"
-            layout="@layout/toolbar2" />
+            layout="@layout/toolbar2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <EditText
@@ -26,9 +29,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="23dp"
 
-            android:hint="rawmix1"
+            android:hint="quantity of raw material 1"
             android:textColor="@color/textboxcolor"
             android:textSize="10dp"
+            android:inputType="number"
             android:theme="@style/txt"
             app:layout_constraintTop_toBottomOf="@+id/editmix1"
             tools:layout_editor_absoluteX="0dp" />
@@ -39,9 +43,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="19dp"
-            android:hint="rawmix2"
+            android:hint="quantity of raw material 2"
             android:textColor="@color/textboxcolor"
             android:textSize="10dp"
+            android:inputType="number"
             android:theme="@style/txt"
             app:layout_constraintTop_toBottomOf="@+id/editmix2"
             tools:layout_editor_absoluteX="16dp" />
@@ -59,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:hint="editmix2"
+            android:hint="raw material  id option 2"
             android:textColor="@color/textboxcolor"
             android:textSize="10dp"
             android:theme="@style/txt"
@@ -71,7 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="26dp"
-            android:hint="editmix1"
+            android:hint="raw material 1 id"
             android:textColor="@color/textboxcolor"
             android:textSize="10dp"
 
@@ -93,7 +98,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:hint="editmix3"
+            android:hint="raw material  id option 3"
             android:textColor="@color/textboxcolor"
             android:textSize="10dp"
             android:theme="@style/txt"
@@ -105,7 +110,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="13dp"
-            android:hint="rawmix3"
+            android:hint="quantity of raw material 3"
+            android:inputType="number"
             android:textColor="@color/textboxcolor"
             android:textSize="10dp"
             android:theme="@style/txt"
@@ -148,10 +154,20 @@
             android:layout_marginBottom="56dp"
             android:background="@color/green"
             android:foregroundGravity="bottom"
+
             android:src="@drawable/message"
             android:theme="@style/floatb"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="317dp"
+            android:layout_height="55dp"
+            android:text="In the slots below key in the ids
+then the quantites"
+            tools:layout_editor_absoluteX="33dp"
+            tools:layout_editor_absoluteY="133dp" />
     </android.support.constraint.ConstraintLayout>
 
 

@@ -2,7 +2,11 @@ package com.example.naile_firm;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -50,19 +54,67 @@ public class addproducts extends AppCompatActivity implements NavigationView.OnN
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rawm_entry);
-
+        setContentView(R.layout.activity_addproducts);
+mdrawerLayout=findViewById(R.id.drawerlayout);
         nametxt=findViewById(R.id.name);
+checkconn();
+secs();
 
-
-        drawable2();
-
-        datepicker();
-
-
-        save_raw_mat_data();
     }
 
+
+    public void secs(){
+        final Handler handler = new Handler();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                checkconn2();
+                handler.postDelayed(this, 10000);
+            }
+        }, 10000);
+    }
+
+
+
+
+    public void  checkconn2(){
+        ConnectivityManager conMgr = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if ( conMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED
+                || conMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED ) {
+
+
+
+
+        }
+        else if ( conMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.DISCONNECTED
+                || conMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.DISCONNECTED) {
+
+            Toast.makeText(getApplicationContext(), "YOU ARE OFFLINE", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void  checkconn(){
+        ConnectivityManager conMgr = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if ( conMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED
+                || conMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED ) {
+
+
+            drawable2();
+
+            datepicker();
+
+
+            save_raw_mat_data();
+
+        }
+        else if ( conMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.DISCONNECTED
+                || conMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.DISCONNECTED) {
+
+            Toast.makeText(getApplicationContext(), "YOU ARE OFFLINE", Toast.LENGTH_LONG).show();
+        }
+    }
 
 
 
@@ -99,6 +151,10 @@ public class addproducts extends AppCompatActivity implements NavigationView.OnN
         myFab = findViewById(R.id.floatbtn);
         myFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                if (nametxt.getText().toString().equals("")) {
+                    Toast.makeText(addproducts.this,"You did not enter a name", Toast.LENGTH_SHORT).show();
+
+                }else{
 
                 Toast.makeText(getApplicationContext(), "SAVED", Toast.LENGTH_SHORT).show();
 
@@ -125,7 +181,7 @@ public class addproducts extends AppCompatActivity implements NavigationView.OnN
                         return params;
                     }
                 };
-                MySingleton.getInstance(addproducts .this).addToRequestQueue(stringRequest);}
+                MySingleton.getInstance(addproducts .this).addToRequestQueue(stringRequest);}}
 
         });
 
@@ -202,6 +258,13 @@ public class addproducts extends AppCompatActivity implements NavigationView.OnN
             super.onBackPressed();}
 
 
+    }
+
+    public void checktext(){
+        if (nametxt.getText().toString().equals("")) {
+            Toast.makeText(this, "You did not enter a name", Toast.LENGTH_SHORT).show();
+
+        }
     }
 }
 

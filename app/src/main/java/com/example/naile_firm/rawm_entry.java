@@ -2,7 +2,11 @@ package com.example.naile_firm;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -41,6 +45,7 @@ public class rawm_entry extends AppCompatActivity implements NavigationView.OnNa
     ArrayAdapter<CharSequence>adapter;
     public String type,quantity,time,id,name,date;
    public EditText typetxt,quantitytxt,timetxt,datetxt,idtxt;
+   int quantity2;
     public FloatingActionButton myFab;
     final String TAG=this.getClass().getSimpleName();
     String url = "http://192.168.43.78/www/html/Naile_progect/insert_raw_mat.php";
@@ -65,8 +70,56 @@ drawable2();
         spinner();
         datepicker();
         timepicker();
+        checkconn();
 
-        save_raw_mat_data();
+secs();
+    }
+    public void secs(){
+        final Handler handler = new Handler();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                checkconn2();
+                handler.postDelayed(this, 10000);
+            }
+        }, 10000);
+    }
+
+
+
+
+    public void  checkconn2(){
+        ConnectivityManager conMgr = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if ( conMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED
+                || conMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED ) {
+
+
+
+
+        }
+        else if ( conMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.DISCONNECTED
+                || conMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.DISCONNECTED) {
+
+            Toast.makeText(getApplicationContext(), "YOU ARE OFFLINE", Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+    public void  checkconn(){
+        ConnectivityManager conMgr = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if ( conMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED
+                || conMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED ) {
+
+            save_raw_mat_data();
+
+        }
+        else if ( conMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.DISCONNECTED
+                || conMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.DISCONNECTED) {
+
+            Toast.makeText(getApplicationContext(), "YOU ARE OFFLINE", Toast.LENGTH_LONG).show();
+        }
     }
 
 
@@ -163,6 +216,10 @@ drawable2();
        myFab.setOnClickListener(new View.OnClickListener() {
            public void onClick(View v) {
 
+
+               if(typetxt.getText().toString().equals("")||quantitytxt.getText().toString().equals("")||timetxt.getText().toString().equals("")||datetxt.getText().toString().equals("")||idtxt.getText().toString().equals("")) {
+                   Toast.makeText(getApplicationContext(), "fill in the missing field", Toast.LENGTH_SHORT).show();}
+               else{
                Toast.makeText(getApplicationContext(), "SAVED", Toast.LENGTH_SHORT).show();
 
            StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -195,9 +252,12 @@ drawable2();
                    return params;
                }
            };
-                   MySingleton.getInstance(rawm_entry .this).addToRequestQueue(stringRequest);}
+                   MySingleton.getInstance(rawm_entry .this).addToRequestQueue(stringRequest);}}
+
 
        }); }
+
+
     public void drawable2(){
 
         ActionBarDrawerToggle darwertoggle=new ActionBarDrawerToggle(this,mdrawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close);

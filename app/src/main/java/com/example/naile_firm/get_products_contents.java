@@ -1,6 +1,10 @@
 package com.example.naile_firm;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -49,16 +53,66 @@ public class get_products_contents extends AppCompatActivity  implements Navigat
         mdrawerLayout=findViewById(R.id.drawerlayout);
         toolbar=findViewById(R.id.toolBar2);
         setSupportActionBar(toolbar);
+        getid=findViewById(R.id.getid);
 
 
 
 
 getdata=findViewById(R.id.getdata);
-drawableb();
-getdatabtn();
-
+        drawableb();
+checkconn();
+secs();
+    }
+    public void secs(){
+        final Handler handler = new Handler();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                checkconn2();
+                handler.postDelayed(this, 10000);
+            }
+        }, 10000);
     }
 
+
+
+
+    public void  checkconn2(){
+        ConnectivityManager conMgr = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if ( conMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED
+                || conMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED ) {
+
+
+
+
+        }
+        else if ( conMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.DISCONNECTED
+                || conMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.DISCONNECTED) {
+
+            Toast.makeText(getApplicationContext(), "YOU ARE OFFLINE", Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+    public void  checkconn(){
+        ConnectivityManager conMgr = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if ( conMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED
+                || conMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED ) {
+
+
+
+
+            getdatabtn();
+
+        }
+        else if ( conMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.DISCONNECTED
+                || conMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.DISCONNECTED) {
+
+            Toast.makeText(getApplicationContext(), "YOU ARE OFFLINE", Toast.LENGTH_LONG).show();
+        }
+    }
 
 
 
@@ -67,9 +121,13 @@ getdatabtn();
         getdata.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (getid.getText().toString().equals("")) {
+                    Toast.makeText(get_products_contents.this, "You did not enter an id", Toast.LENGTH_SHORT).show();
+                    return;
+                }else{
                 get_good_id();
 
-            }
+            }}
         });
     }
 
@@ -224,7 +282,7 @@ getdatabtn();
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String, String> params = new HashMap<String, String>();
 
-                getid=findViewById(R.id.getid);
+
                   String  id=getid.getText().toString();
 
 
