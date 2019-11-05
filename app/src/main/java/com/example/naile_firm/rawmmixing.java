@@ -63,12 +63,17 @@ public class rawmmixing extends AppCompatActivity implements NavigationView.OnNa
     private static ProgressDialog mProgressDialog;
     String url = "http://192.168.43.78/www/html/Naile_progect/mix.php";
     String url2 = "http://192.168.43.78/www/html/Naile_progect/get_products.php";
+    String url3 = "http://192.168.43.78/www/html/Naile_progect/get_rawmat.php";
+
     final String TAG=this.getClass().getSimpleName();
     private ArrayList<products2> statuscheckArrayList;
-    private ArrayList<String> names = new ArrayList<String>();
-   public Spinner spinner;
+    private ArrayList<productsraw> statuscheckArrayList2;
 
-    public EditText quantitymix1,quantitymix2,quantitymix3,editmix1,editmix2,editmix3,timet,date;
+    private ArrayList<String> names = new ArrayList<String>();
+    private ArrayList<String> names2 = new ArrayList<String>();
+   public Spinner spinner,editmix1,editmix2,editmix3;
+
+    public EditText quantitymix1,quantitymix2,quantitymix3,timet,date;
     ArrayAdapter<CharSequence>adapter;
     public String timemix,datemix,namemix1,namemix2,namemix3,quantity1,quantity2,quantity3,desiredString1,desiredString2,typeexpected,desiredString3,mixid;
     DrawerLayout mdrawerLayout;
@@ -94,6 +99,7 @@ public class rawmmixing extends AppCompatActivity implements NavigationView.OnNa
 
 
 timepicker();
+getjsonraw();
 
         drawable2();
 
@@ -217,15 +223,15 @@ public void popup(){
 }
 
 public void idgeneration(){
-    CharSequence foo1 = editmix1.getText();
+    CharSequence foo1 = editmix1.getSelectedItem().toString();
     String sub1 = foo1.toString();
  desiredString1 = sub1.substring(0,3);
 
-    CharSequence foo2 = editmix1.getText();
+    CharSequence foo2 = editmix1.getSelectedItem().toString();
     String sub2 = foo2.toString();
     desiredString2 = sub2.substring(0,3);
 
-    CharSequence foo3 = editmix1.getText();
+    CharSequence foo3 = editmix1.getSelectedItem().toString();
     String sub3 = foo3.toString();
     desiredString3= sub3.substring(0,3);
 
@@ -240,7 +246,7 @@ public void idgeneration(){
   private void getjson(){
 
 
-            showSimpleProgressDialog(this, "Loading...","Fetching Json",false);
+            showSimpleProgressDialog(this, "Loading...","Fetching Json",true);
 
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url2,
                     new Response.Listener<String>() {
@@ -338,9 +344,7 @@ public void save_raw_mat_data(){
         @Override
         protected Map<String, String> getParams() throws AuthFailureError {
             Map<String, String> params = new HashMap<String, String>();
-namemix1=editmix1.getText().toString();
-namemix2=editmix2.getText().toString();
-namemix3=editmix3.getText().toString();
+
 quantity1=quantitymix1.getText().toString();
 quantity2=quantitymix2.getText().toString();
 quantity3=quantitymix3.getText().toString();
@@ -415,10 +419,10 @@ quantity3=quantitymix3.getText().toString();
         fbtnmix = findViewById(R.id.floatbtnmix);
         fbtnmix.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(editmix1.getText().toString().equals("")||editmix2.getText().toString().equals("")||editmix3.getText().toString().equals("")||quantitymix1.getText().toString().equals("")||quantitymix2.getText().toString().equals("")||quantitymix3.getText().toString().equals("")||timet.getText().toString().equals("")) {
+                if(editmix1.getSelectedItem().toString().equals("")||editmix2.getSelectedItem().toString().equals("")||editmix3.getSelectedItem().toString().equals("")||quantitymix1.getText().toString().equals("")||quantitymix2.getText().toString().equals("")||quantitymix3.getText().toString().equals("")||timet.getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(), "fill in the missing field", Toast.LENGTH_SHORT).show();}
 
-                else  if(editmix1.getText().toString().length()<4||editmix2.getText().toString().length()<4||editmix3.getText().toString().length()<4){
+                else  if(editmix1.getSelectedItem().toString().length()<4||editmix2.getSelectedItem().toString().length()<4||editmix3.getSelectedItem().toString().length()<4){
                     Toast.makeText(getApplicationContext(), "please check the values of ur id and try again", Toast.LENGTH_LONG).show();
                 }
                 else {
@@ -495,6 +499,10 @@ quantity3=quantitymix3.getText().toString();
                 Intent i10=new Intent(".trans_c");
                 startActivity(i10);
                 break;
+            case R.id.reports:
+                Intent i1r=new Intent(".reports");
+                startActivity(i1r);
+                break;
 
         }
         mdrawerLayout.closeDrawer(GravityCompat.START);
@@ -510,6 +518,126 @@ quantity3=quantitymix3.getText().toString();
 
 
     }
+
+
+
+    private void getjsonraw(){
+
+
+        showSimpleProgressDialog(this, "Loading...","Fetching Json",false);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url3,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        Log.d("strrrrr", ">>" + response);
+
+
+                        try {
+
+                            JSONObject obj = new JSONObject(response);
+                            if(obj.optString("status").equals("true")){
+
+                                statuscheckArrayList2 = new ArrayList<>();
+                                JSONArray dataArray  = obj.getJSONArray("data");
+
+                                for (int i = 0; i < dataArray.length(); i++) {
+
+                                    productsraw playerModel = new productsraw();
+                                    JSONObject dataobj = dataArray.getJSONObject(i);
+
+                                    playerModel.setId(dataobj.getString("id"));
+                                    playerModel.setType(dataobj.getString("type"));
+
+
+                                    statuscheckArrayList2.add(playerModel);
+
+                                }
+
+                                for (int i = 0; i < statuscheckArrayList2.size(); i++){
+                                    names2.add(statuscheckArrayList2.get(i).getType());
+                                    idtype=(statuscheckArrayList2.get(i).getId());
+                                }
+
+
+                                ArrayAdapter<String> spinnerArrayAdapter2 = new ArrayAdapter<String>(rawmmixing.this,simple_spinner_item, names2);
+                                spinnerArrayAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
+                                editmix1.setAdapter(spinnerArrayAdapter2);
+                               editmix1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                        String slectedname1 = parent.getItemAtPosition(position).toString();
+
+                                        Toast.makeText(getApplicationContext(), "Entered: "+slectedname1, Toast.LENGTH_LONG).show();
+                                        namemix1=slectedname1;
+
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> parent) {
+
+                                    }
+                                });
+
+                                editmix2.setAdapter(spinnerArrayAdapter2);
+                                editmix2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                        String slectedname2 = parent.getItemAtPosition(position).toString();
+
+                                        Toast.makeText(getApplicationContext(), "Entered: "+slectedname2, Toast.LENGTH_LONG).show();
+                                        namemix2=slectedname2;
+
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> parent) {
+
+                                    }
+                                });
+                                editmix3.setAdapter(spinnerArrayAdapter2);
+                                editmix3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                        String slectedname3 = parent.getItemAtPosition(position).toString();
+
+                                        Toast.makeText(getApplicationContext(), "Entered: "+slectedname3, Toast.LENGTH_LONG).show();
+                                        namemix3=slectedname3;
+
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> parent) {
+
+                                    }
+                                });
+                                removeSimpleProgressDialog();
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //displaying the error in toast if occurrs
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        // request queue
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        requestQueue.add(stringRequest);
+
+
+
+    }
+
 
 
 

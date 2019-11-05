@@ -135,6 +135,10 @@ localhome();
                 Intent i14=new Intent(".packaging");
                 startActivity(i14);
                 break;
+            case R.id.reports:
+                Intent i1r=new Intent(".reports");
+                startActivity(i1r);
+                break;
 
         }
         mdrawerLayout.closeDrawer(GravityCompat.START);

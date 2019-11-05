@@ -358,6 +358,10 @@ secs();
                 Intent i12=new Intent(".status_c");
                 startActivity(i12);
                 break;
+            case R.id.reports:
+                Intent i1r=new Intent(".reports");
+                startActivity(i1r);
+                break;
 
         }
         mdrawerLayout.closeDrawer(GravityCompat.START);

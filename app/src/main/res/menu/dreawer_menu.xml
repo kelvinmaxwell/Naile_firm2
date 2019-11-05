@@ -7,7 +7,7 @@
     <item android:title="communicate">
         <menu>
             <item android:id="@+id/nav_home"
-                android:icon="@drawable/message"
+                android:icon="@drawable/home"
                 android:title="home"/>
             <item android:id="@+id/productgen"
                 android:icon="@drawable/message"
@@ -20,7 +20,7 @@
     <group android:checkableBehavior="single">
 
         <item android:id="@+id/nav_get_contents"
-            android:icon="@drawable/message"
+            android:icon="@drawable/home"
             android:title="get_product_contents"
 
             />
@@ -35,6 +35,10 @@
         <item android:id="@+id/addproduct"
             android:icon="@drawable/message"
             android:title="add product_description"
+            />
+        <item android:id="@+id/reports"
+            android:icon="@drawable/message"
+            android:title="reports"
             />
 
 
