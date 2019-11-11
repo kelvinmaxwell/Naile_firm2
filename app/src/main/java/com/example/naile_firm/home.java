@@ -10,15 +10,35 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.graphics.drawable.DrawerArrowDrawable;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private Toolbar toolbar;
+    SessionManager sessionManager;
     Button btnmain,btnchuka,btnb,btnc;
 DrawerLayout mdrawerLayout;
-
+    private ArrayList<arrivals_session> statuscheckArrayList;
+    private ArrayList<String> names = new ArrayList<String>();
+    String url = "http://192.168.43.78/www/html/Naile_progect/arrivchuka.php";
+    public String session;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +50,15 @@ DrawerLayout mdrawerLayout;
         btnb=findViewById(R.id.B);
         btnc=findViewById(R.id.C);
         setSupportActionBar(toolbar);
+        sessionManager=new SessionManager(this);
+        sessionManager.checkLogin();
+        HashMap<String,String> user=sessionManager.getUserDetail();
+        String mName=user.get(sessionManager.NAME);
+        String mEmail=user.get(sessionManager.EMAIL);
+btnb.setText(mName);
+btnc.setText(mEmail);
+        Toast.makeText(getApplicationContext(),mName+mEmail,Toast.LENGTH_LONG).show();
+
         //ActionBarDrawerToggle darwertoggle=new ActionBarDrawerToggle(this,mdrawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close);
 
 localhome();
@@ -139,6 +168,13 @@ localhome();
                 Intent i1r=new Intent(".reports");
                 startActivity(i1r);
                 break;
+            case R.id.addusers:
+                Intent i2r=new Intent(".addusers");
+                startActivity(i2r);
+                break;
+            case R.id.logout:
+               sessionManager.logout();
+                break;
 
         }
         mdrawerLayout.closeDrawer(GravityCompat.START);
@@ -153,4 +189,8 @@ localhome();
             super.onBackPressed();}
 
     }
+
+
+
+
 }

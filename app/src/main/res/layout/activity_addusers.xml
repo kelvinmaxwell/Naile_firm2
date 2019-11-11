@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".arrivals_b"
+    android:id="@+id/drawerlayout_b"
+    android:fitsSystemWindows="true"
+    >
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/include4"
+            layout="@layout/toolbar2"
+
+
+            app:layout_constraintBottom_toTopOf="@+id/arrivtypetxtb"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <EditText
+            android:id="@+id/idusers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="65dp"
+            android:hint="id"
+            android:textColor="@color/textboxcolor"
+            android:textSize="10dp"
+            android:theme="@style/txt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/locationusers" />
+        "/>
+
+        <EditText
+            android:id="@+id/nameusers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="46dp"
+            android:hint="name"
+            android:textColor="@color/textboxcolor"
+            android:textSize="10dp"
+            android:theme="@style/txt"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include4" />
+
+
+        <EditText
+            android:id="@+id/locationusers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="58dp"
+            android:hint="location"
+            android:textColor="@color/textboxcolor"
+            android:textSize="10dp"
+            android:theme="@style/txt"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nameusers" />
+
+
+        <EditText
+            android:id="@+id/prevelage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:hint="prevelage"
+            android:textColor="@color/textboxcolor"
+            android:textSize="10dp"
+            android:theme="@style/txt"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/idusers" />
+
+
+
+
+        <android.support.design.widget.FloatingActionButton
+
+            android:id="@+id/arrivfloatusers"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginEnd="28dp"
+            android:layout_marginBottom="32dp"
+            android:background="@color/green"
+            android:foregroundGravity="bottom"
+            android:src="@drawable/message"
+            android:theme="@style/floatb"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_viewb"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_head"
+        app:menu="@menu/drawer_b"
+        />
+
+</android.support.v4.widget.DrawerLayout>

@@ -9,9 +9,14 @@
             <item android:id="@+id/nav_home"
                 android:icon="@drawable/home"
                 android:title="home"/>
-            <item android:id="@+id/productgen"
-                android:icon="@drawable/message"
-                android:title="productgeneration"/>
+            <item android:id="@+id/addusers"
+                android:icon="@drawable/adduser"
+                android:title="home"/>
+
+            <item android:id="@+id/logout"
+                android:icon="@drawable/logout"
+                android:title="logout"/>
+
 
 
         </menu>
@@ -19,25 +24,32 @@
 
     <group android:checkableBehavior="single">
 
+
+
+        <item android:id="@+id/productgen"
+            android:icon="@drawable/productgen"
+            android:title="productgeneration"/>
         <item android:id="@+id/nav_get_contents"
-            android:icon="@drawable/home"
+            android:icon="@drawable/getproduct"
             android:title="get_product_contents"
 
             />
 
+
+
         <item android:id="@+id/nav_rawm_entry"
-            android:icon="@drawable/message"
+            android:icon="@drawable/feedraw"
             android:title="feed_raw materials"/>
 
         <item android:id="@+id/nav_raw_mixing"
-            android:icon="@drawable/message"
+            android:icon="@drawable/mixing"
             android:title="raw_material_mixing"/>
         <item android:id="@+id/addproduct"
-            android:icon="@drawable/message"
+            android:icon="@drawable/add"
             android:title="add product_description"
             />
         <item android:id="@+id/reports"
-            android:icon="@drawable/message"
+            android:icon="@drawable/reports2"
             android:title="reports"
             />
 
@@ -51,14 +63,14 @@
     <item android:title="transist">
         <menu>
             <item android:id="@+id/trans_chuka"
-                android:icon="@drawable/message"
+                android:icon="@drawable/trans"
                 android:title="trans_chuka"/>
 
             <item android:id="@+id/transist_B"
-                android:icon="@drawable/message"
+                android:icon="@drawable/trans"
                 android:title="trans_B"/>
             <item android:id="@+id/transist_C"
-                android:icon="@drawable/message"
+                android:icon="@drawable/trans"
                 android:title="trans_C"/>
         </menu>
     </item>

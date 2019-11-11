@@ -13,9 +13,7 @@
             android:icon="@drawable/message"
             android:title="arrivals_chuka"
             />
-            <item android:id="@+id/status_chuka"
-                android:icon="@drawable/message"
-                android:title="status_chuka"/>
+
     <item android:title="communicate">
         <menu>
             <item android:id="@+id/messages"

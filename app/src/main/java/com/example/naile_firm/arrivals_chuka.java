@@ -5,6 +5,7 @@ package com.example.naile_firm;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -19,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -27,15 +29,24 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+
+import static android.R.layout.simple_spinner_item;
 
 public class arrivals_chuka extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     final Calendar myCalendar = Calendar.getInstance();
@@ -48,6 +59,14 @@ public class arrivals_chuka extends AppCompatActivity implements NavigationView.
     String url = "http://192.168.43.78/www/html/Naile_progect/arrivchuka.php";
     DrawerLayout mdrawerLayout;
     private Toolbar toolbar;
+    private ArrayList<arrivals_session> statuscheckArrayList;
+public Button btn;
+
+    private ArrayList<String> names = new ArrayList<String>();
+    public String session;
+
+
+
 
 
     @Override
@@ -62,15 +81,25 @@ public class arrivals_chuka extends AppCompatActivity implements NavigationView.
         idtxt=findViewById(R.id.arrividtxt);
         mdrawerLayout=findViewById(R.id.drawerlayout_chuka);
         toolbar=findViewById(R.id.toolBar2);
-
+btn=findViewById(R.id.button2);
         drawable2();
         spinner();
         datepicker();
         timepicker();
 
         save_raw_mat_data();
+        getjson();
+        clock();
     }
 
+     public void clock(){
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+             Toast.makeText(getApplicationContext(),session,Toast.LENGTH_LONG).show();
+            }
+        });
+     }
 
     public void timepicker(){
         timetxt.setOnClickListener(new View.OnClickListener() {
@@ -247,5 +276,86 @@ public class arrivals_chuka extends AppCompatActivity implements NavigationView.
 
 
     }
-}
+    private void getjson(){
+
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        Log.d("strrrrr", ">>" + response);
+
+
+                        try {
+
+
+
+
+
+
+
+
+
+
+                            JSONObject obj = new JSONObject(response);
+                            if(obj.optString("status").equals("true")){
+
+                                statuscheckArrayList = new ArrayList<>();
+                                JSONArray dataArray  = obj.getJSONArray("data");
+
+                                for (int i = 0; i < dataArray.length(); i++) {
+
+                                    arrivals_session playerModel = new arrivals_session();
+                                    JSONObject dataobj = dataArray.getJSONObject(i);
+
+                                    playerModel.setName(dataobj.getString("name"));
+                                    playerModel.setEmail(dataobj.getString("email"));
+
+
+
+                                    statuscheckArrayList.add(playerModel);
+
+                                }
+
+                                for (int i = 0; i < statuscheckArrayList.size(); i++){
+                                    names.add(statuscheckArrayList.get(i).getName());
+                                    names.add(statuscheckArrayList.get(i).getEmail());
+
+                                }
+
+  session=names.get(0);
+
+
+
+
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //displaying the error in toast if occurrs
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+        // request queue
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        requestQueue.add(stringRequest);
+
+
+
+    }
+
+
+    }
 
