@@ -38,7 +38,7 @@ DrawerLayout mdrawerLayout;
     private ArrayList<arrivals_session> statuscheckArrayList;
     private ArrayList<String> names = new ArrayList<String>();
     String url = "http://192.168.43.78/www/html/Naile_progect/arrivchuka.php";
-    public String session;
+    public String session,mEmail,mName,mprevelage,mlocation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,10 +53,13 @@ DrawerLayout mdrawerLayout;
         sessionManager=new SessionManager(this);
         sessionManager.checkLogin();
         HashMap<String,String> user=sessionManager.getUserDetail();
-        String mName=user.get(sessionManager.NAME);
-        String mEmail=user.get(sessionManager.EMAIL);
-btnb.setText(mName);
-btnc.setText(mEmail);
+        mName=user.get(sessionManager.NAME);
+       mEmail=user.get(sessionManager.EMAIL);
+       mprevelage=user.get(SessionManager.PREVELAGE);
+        mlocation=user.get(sessionManager.LOCATION);
+
+btnchuka.setText(mlocation);
+
         Toast.makeText(getApplicationContext(),mName+mEmail,Toast.LENGTH_LONG).show();
 
         //ActionBarDrawerToggle darwertoggle=new ActionBarDrawerToggle(this,mdrawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close);
@@ -92,9 +95,14 @@ localhome();
         btnmain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if(mprevelage.equalsIgnoreCase("ADMIN")||mprevelage.equalsIgnoreCase("management")){
                 Intent i=new Intent(".rawm_entry");
                 startActivity(i);
-            }
+            }else{
+                    btnmain.setVisibility(View.GONE);
+                Toast.makeText(getApplicationContext(),"access denied,contact management",Toast.LENGTH_SHORT).show();
+            }}
         });
 
     }
@@ -132,14 +140,7 @@ localhome();
                 Intent i8=new Intent(".transist");
                 startActivity(i8);
                 break;
-            case R.id.transist_B:
-                Intent i9=new Intent(".trans_b");
-                startActivity(i9);
-                break;
-            case R.id.transist_C:
-                Intent i10=new Intent(".trans_c");
-                startActivity(i10);
-                break;
+
             case R.id.nav_arriv_chuka:
                 Intent i6=new Intent(".arrivals_chuka");
                 startActivity(i6);
@@ -148,14 +149,7 @@ localhome();
                 Intent i7=new Intent(".status");
                 startActivity(i7);
                 break;
-            case R.id.status_c:
-                Intent i11=new Intent(".status_c");
-                startActivity(i11);
-                break;
-            case R.id.status_B:
-                Intent i12=new Intent(".status_b");
-                startActivity(i12);
-                break;
+
             case R.id.addproduct:
                 Intent i13=new Intent(".addproducts");
                 startActivity(i13);
@@ -165,7 +159,7 @@ localhome();
                 startActivity(i14);
                 break;
             case R.id.reports:
-                Intent i1r=new Intent(".reports");
+                Intent i1r=new Intent(".balances");
                 startActivity(i1r);
                 break;
             case R.id.addusers:

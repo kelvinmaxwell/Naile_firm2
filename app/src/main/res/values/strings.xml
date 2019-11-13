@@ -16,6 +16,15 @@
         <item>New Zealand</item>
         <item>India</item>
     </string-array>
+
+    <string-array name="reports">
+        <item>Raw materials balances</item>
+        <item>production balances</item>
+        <item>vehicle reports</item>
+    </string-array>
+
+
+
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
     <string name="title_activity_arrivals_b">arrivals_b</string>

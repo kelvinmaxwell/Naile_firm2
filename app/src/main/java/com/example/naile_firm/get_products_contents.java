@@ -334,14 +334,7 @@ secs();
                 Intent i8=new Intent(".transist");
                 startActivity(i8);
                 break;
-            case R.id.transist_B:
-                Intent i9=new Intent(".trans_b");
-                startActivity(i9);
-                break;
-            case R.id.transist_C:
-                Intent i10=new Intent(".trans_c");
-                startActivity(i10);
-                break;
+
             case R.id.nav_arriv_chuka:
                 Intent i6=new Intent(".arrivals_chuka");
                 startActivity(i6);
@@ -350,16 +343,9 @@ secs();
                 Intent i7=new Intent(".status");
                 startActivity(i7);
                 break;
-            case R.id.status_B:
-                Intent i11=new Intent(".status_b");
-                startActivity(i11);
-                break;
-            case R.id.status_C:
-                Intent i12=new Intent(".status_c");
-                startActivity(i12);
-                break;
+
             case R.id.reports:
-                Intent i1r=new Intent(".reports");
+                Intent i1r=new Intent(".balances");
                 startActivity(i1r);
                 break;
 

@@ -89,14 +89,7 @@ public class status extends AppCompatActivity implements NavigationView.OnNaviga
                 Intent i8=new Intent(".transist");
                 startActivity(i8);
                 break;
-            case R.id.transist_B:
-                Intent i9=new Intent(".trans_b");
-                startActivity(i9);
-                break;
-            case R.id.transist_C:
-                Intent i10=new Intent(".trans_c");
-                startActivity(i10);
-                break;
+
 
 
 

@@ -36,36 +36,57 @@
             android:text="C"
             android:visibility="gone" />
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/card5"
-            android:layout_width="342dp"
-            android:layout_height="264dp"
-            android:background="@drawable/rounded_corner"
-            app:cardCornerRadius="4dp">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="395dp"
+            android:layout_height="439dp">
+            android:id="@+id/rootlayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+
+
+            <android.support.v7.widget.CardView
+
+                android:id="@+id/card"
+                android:layout_width="369dp"
+                android:layout_height="274dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/rounded_corner"
+                app:cardBackgroundColor="#42475C"
+                app:cardElevation="2dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/main"
-                android:layout_width="match_parent"
-                android:layout_height="192dp"
-                android:layout_marginTop="50dp"
-                android:elevation="30dp"
-                android:text="main" />
-        </android.support.v7.widget.CardView>
+                android:layout_width="156dp"
+                android:layout_height="140dp"
+                android:layout_marginEnd="196dp"
+                android:layout_marginBottom="196dp"
+                android:background="@drawable/rounded_corner"
+                android:backgroundTint="#504A4A"
+                android:elevation="40dp"
+                android:text="main"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/card" />
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/cardf"
-            android:layout_width="344dp"
-            android:layout_height="200dp"
-            android:background="@drawable/rounded_corner"
-            android:elevation="10dp">
 
             <Button
                 android:id="@+id/chuka"
-                android:layout_width="332dp"
-                android:layout_height="match_parent"
+                android:layout_width="152dp"
+                android:layout_height="141dp"
+                android:layout_marginEnd="48dp"
+                android:layout_marginBottom="196dp"
+                android:background="@drawable/rounded_corner"
+                android:backgroundTint="#504A4A"
                 android:elevation="30px"
-                android:text="Chuka" />
-        </android.support.v7.widget.CardView>
+                android:text="Chuka"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+       ,
+        </android.support.constraint.ConstraintLayout>
 
     </LinearLayout>
 

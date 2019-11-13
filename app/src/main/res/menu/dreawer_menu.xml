@@ -4,7 +4,7 @@
     tools:showIn="navigation_view">
 
 
-    <item android:title="communicate">
+    <item android:title="GENERAL">
         <menu>
             <item android:id="@+id/nav_home"
                 android:icon="@drawable/home"
@@ -29,11 +29,7 @@
         <item android:id="@+id/productgen"
             android:icon="@drawable/productgen"
             android:title="productgeneration"/>
-        <item android:id="@+id/nav_get_contents"
-            android:icon="@drawable/getproduct"
-            android:title="get_product_contents"
 
-            />
 
 
 
@@ -48,10 +44,7 @@
             android:icon="@drawable/add"
             android:title="add product_description"
             />
-        <item android:id="@+id/reports"
-            android:icon="@drawable/reports2"
-            android:title="reports"
-            />
+
 
 
 
@@ -64,28 +57,38 @@
         <menu>
             <item android:id="@+id/trans_chuka"
                 android:icon="@drawable/trans"
-                android:title="trans_chuka"/>
+                android:title="trans"/>
 
-            <item android:id="@+id/transist_B"
-                android:icon="@drawable/trans"
-                android:title="trans_B"/>
-            <item android:id="@+id/transist_C"
-                android:icon="@drawable/trans"
-                android:title="trans_C"/>
+
         </menu>
     </item>
     <item android:title="status">
         <menu>
             <item android:id="@+id/status_chuka"
-                android:icon="@drawable/message"
-                android:title="status_chuka"/>
+                android:icon="@drawable/statuslorry"
+                android:title="status"/>
 
-            <item android:id="@+id/status_B"
-                android:icon="@drawable/message"
-                android:title="status_B"/>
-            <item android:id="@+id/status_C"
-                android:icon="@drawable/message"
-                android:title="status_C"/>
+
+
+        </menu>
+    </item>
+
+    <item android:title="REPORTS">
+        <menu>
+            <item android:id="@+id/reports"
+                android:icon="@drawable/reports2"
+                android:title="reports"
+                />
+            <item android:id="@+id/nav_get_contents"
+                android:icon="@drawable/getproduct"
+                android:title="get_product_contents"
+
+                />
+
+            <item android:id="@+id/lorriesreports"
+                android:icon="@drawable/statuslorry"
+                android:title="lorries"/>
+
 
         </menu>
     </item>

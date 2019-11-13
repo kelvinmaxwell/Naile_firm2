@@ -116,14 +116,7 @@ drawable2();
                 Intent i=new Intent(".home");
                 startActivity(i);
                 break;
-            case R.id.nav_arriv_B:
-                Intent i2=new Intent(".arrivals_b");
-                startActivity(i2);
-                break;
-            case R.id.status_B:
-                Intent i3=new Intent(".status_b");
-                startActivity(i3);
-                break;
+
 
 
         }

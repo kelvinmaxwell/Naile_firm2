@@ -37,7 +37,7 @@ import java.util.Map;
 
 public class transist extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     final Calendar myCalendar = Calendar.getInstance();
-    Spinner rawmatspinner;
+   EditText rawmatspinner;
     ArrayAdapter<CharSequence>adapter;
     public String type,quantity,time,id,name,date;
     public EditText typetxt,quantitytxt,timetxt,datetxt,idtxt;
@@ -62,7 +62,7 @@ public class transist extends AppCompatActivity implements NavigationView.OnNavi
         toolbar=findViewById(R.id.toolBar2);
 
         drawable2();
-        spinner();
+       // spinner();
         datepicker();
         timepicker();
 
@@ -138,24 +138,7 @@ public class transist extends AppCompatActivity implements NavigationView.OnNavi
 
 
 
-    public void spinner(){
-        adapter=ArrayAdapter.createFromResource(this,R.array.country_arrays,android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        rawmatspinner.setAdapter(adapter);
-        rawmatspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                Toast.makeText(getBaseContext(),parent.getItemAtPosition(position)+"selected",Toast.LENGTH_LONG).show();
-                name=parent.getItemAtPosition(position).toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-    }
 
     public void save_raw_mat_data() {
 
@@ -181,6 +164,7 @@ public class transist extends AppCompatActivity implements NavigationView.OnNavi
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> params = new HashMap<String,String>();
+                        name=rawmatspinner.getText().toString();
                         type=typetxt.getText().toString();
                         quantity=quantitytxt.getText().toString();
                         time=timetxt.getText().toString();
@@ -191,6 +175,8 @@ public class transist extends AppCompatActivity implements NavigationView.OnNavi
                         params.put("quantity", quantity);
                         params.put("date", date);
                         params.put("time", time);
+
+
                         params.put("id", id);
                         return params;
                     }
@@ -240,14 +226,7 @@ public class transist extends AppCompatActivity implements NavigationView.OnNavi
                 Intent i7=new Intent(".status");
                 startActivity(i7);
                 break;
-            case R.id.status_B:
-                Intent i11=new Intent(".status_b");
-                startActivity(i11);
-                break;
-            case R.id.status_C:
-                Intent i12=new Intent(".status_c");
-                startActivity(i12);
-                break;
+
 
         }
         mdrawerLayout.closeDrawer(GravityCompat.START);

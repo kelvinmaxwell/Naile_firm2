@@ -14,9 +14,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
+        <activity android:name=".balances">
+            <intent-filter>
+                <action android:name=".balances" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".addusers"
-
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name=".addusers" />
@@ -34,50 +40,6 @@
         <activity android:name=".addproducts">
             <intent-filter>
                 <action android:name=".addproducts" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".trans_c">
-            <intent-filter>
-                <action android:name=".trans_c" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".trans_b">
-            <intent-filter>
-                <action android:name=".trans_b" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".arrivals_c">
-            <intent-filter>
-                <action android:name=".arrivals_c" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".arrivals_b"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name=".arrivals_b" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".status_c">
-            <intent-filter>
-                <action android:name=".status_c" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".status_b">
-            <intent-filter>
-                <action android:name=".status_b" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

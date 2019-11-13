@@ -96,10 +96,15 @@ login();
                                     JSONObject dataobj = dataArray.getJSONObject(i);
                                     String name1=dataobj.getString("name").trim();
                                     String email1=dataobj.getString("email").trim();
-                                    sessionManager.createSession(name1,email1);
+                                    String prevelage1=dataobj.getString("prevelage").trim();
+                                    String location1=dataobj.getString("location").trim();
+
+                                    sessionManager.createSession(name1,email1,prevelage1,location1);
                                     Intent intent=new Intent(MainActivity.this,home.class);// playerModel.setName(dataobj.getString("name"));
                                     intent.putExtra("name",name1);
                                     intent.putExtra("email",email1);
+                                    intent.putExtra("prevelage",prevelage1);
+                                    intent.putExtra("location",location1);
                                     startActivity(intent);
                                     finish();// playerModel.setEmail(dataobj.getString("email"));
 
@@ -183,7 +188,7 @@ login.setVisibility(View.GONE);
                                     JSONObject dataobj = dataArray.getJSONObject(i);
                                     String name1=dataobj.getString("name").trim();
                                     String email1=dataobj.getString("email").trim();
-                                    sessionManager.createSession(name1,email1);
+                              //      sessionManager.createSession(name1,email1,);
                                     Intent intent=new Intent(MainActivity.this,home.class);// playerModel.setName(dataobj.getString("name"));
                                     intent.putExtra("name",name1);
                                     intent.putExtra("email",email1);

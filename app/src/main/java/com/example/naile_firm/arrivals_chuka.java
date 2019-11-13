@@ -51,9 +51,11 @@ import static android.R.layout.simple_spinner_item;
 public class arrivals_chuka extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     final Calendar myCalendar = Calendar.getInstance();
     Spinner rawmatspinner;
+   public SessionManager sessionManager;
     ArrayAdapter<CharSequence>adapter;
     public String type,quantity,time,id,name,date;
     public EditText typetxt,quantitytxt,timetxt,datetxt,idtxt;
+    public String session,mEmail,mName,mprevelage,mlocation;
     public FloatingActionButton myFab;
     final String TAG=this.getClass().getSimpleName();
     String url = "http://192.168.43.78/www/html/Naile_progect/arrivchuka.php";
@@ -63,7 +65,6 @@ public class arrivals_chuka extends AppCompatActivity implements NavigationView.
 public Button btn;
 
     private ArrayList<String> names = new ArrayList<String>();
-    public String session;
 
 
 
@@ -82,6 +83,13 @@ public Button btn;
         mdrawerLayout=findViewById(R.id.drawerlayout_chuka);
         toolbar=findViewById(R.id.toolBar2);
 btn=findViewById(R.id.button2);
+        sessionManager=new SessionManager(this);
+        sessionManager.checkLogin();
+        HashMap<String,String> user=sessionManager.getUserDetail();
+        mName=user.get(sessionManager.NAME);
+        mEmail=user.get(sessionManager.EMAIL);
+        mprevelage=user.get(SessionManager.PREVELAGE);
+        mlocation=user.get(sessionManager.LOCATION);
         drawable2();
         spinner();
         datepicker();
@@ -90,6 +98,7 @@ btn=findViewById(R.id.button2);
         save_raw_mat_data();
         getjson();
         clock();
+        btn.setText(mlocation);
     }
 
      public void clock(){
@@ -222,7 +231,9 @@ btn=findViewById(R.id.button2);
                         params.put("quantity", quantity);
                         params.put("date", date);
                         params.put("time", time);
+
                         params.put("id", id);
+                        params.put("location",mlocation);
                         return params;
                     }
                 };
