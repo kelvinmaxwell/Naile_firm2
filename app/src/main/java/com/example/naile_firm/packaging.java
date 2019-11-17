@@ -26,6 +26,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amigold.fundapter.BindDictionary;
@@ -58,6 +59,7 @@ public class packaging extends AppCompatActivity  implements NavigationView.OnNa
     String url3 = "http://192.168.43.78/www/html/Naile_progect/getcount.php";
     String url4 = "http://192.168.43.78/www/html/Naile_progect/updatevalues.php";
     String url5= "http://192.168.43.78/www/html/Naile_progect/getstatus.php";
+    String urlname = "http://192.168.43.78/www/html/Naile_progect/getdata3.php";
 
 
 
@@ -69,9 +71,10 @@ public class packaging extends AppCompatActivity  implements NavigationView.OnNa
 
     public Button getdata, changestatus;
     public EditText getid;
+    public TextView txt;
     DrawerLayout mdrawerLayout;
     private Toolbar toolbar;
-    public String selectedname,statuss;
+    public String selectedname,statuss,uniname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +87,7 @@ public class packaging extends AppCompatActivity  implements NavigationView.OnNa
         spinner = findViewById(R.id.spinnerpack);
         changestatus = findViewById(R.id.changestatus);
         getid = findViewById(R.id.getidpack);
-
+txt=findViewById(R.id.nameitem);
 
         getdata = findViewById(R.id.getdatapack);
 
@@ -321,6 +324,7 @@ checkconn();
                                     playerModel.setmainid(dataobj.getString("mixid"));
 
 
+
                                     statuscheckArrayList.add(playerModel);
 
                                 }
@@ -338,10 +342,11 @@ checkconn();
                                         getdata.setEnabled(false);
                                         validate();
                                         selectedname = parent.getItemAtPosition(position).toString();
+                                        uniname=parent.getItemAtPosition(position).toString();
                                         get_good_id2();
 
                                         Toast.makeText(getApplicationContext(), "selected: " + selectedname, Toast.LENGTH_LONG).show();
-
+                                                               retrieveJSON2(uniname);
 
 
 
@@ -611,6 +616,86 @@ params.put("mixid",selectedname);
 
 
         }
+
+
+
+    private void retrieveJSON2(final String nameneed) {
+
+     //   showSimpleProgressDialog(this, "Loading...", "Fetching Json", false);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, urlname,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        Log.d("strrrrr", ">>" + response);
+
+
+                        try {
+
+                            JSONObject obj = new JSONObject(response);
+                            if (obj.optString("status").equals("true")) {
+
+                                statuscheckArrayList = new ArrayList<>();
+                                JSONArray dataArray = obj.getJSONArray("data");
+
+                                for (int i = 0; i < dataArray.length(); i++) {
+
+                                   id2 playerModel = new id2();
+                                    JSONObject dataobj = dataArray.getJSONObject(i);
+
+                                    playerModel.setTypeexpected(dataobj.getString("typeexpected"));
+
+String type=dataobj.getString("typeexpected");;
+
+txt.setText(type);
+
+                                }
+
+
+
+
+
+
+
+
+
+
+
+
+                                removeSimpleProgressDialog();
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //displaying the error in toast if occurrs
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+
+
+
+
+
+                params.put("typeexpected",nameneed);
+
+                return params;
+            }
+        };
+        MySingleton.getInstance(packaging.this).addToRequestQueue(stringRequest);
+
+
+    }
 
 
 

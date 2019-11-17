@@ -168,6 +168,17 @@
 then the quantites"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/loading2"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="52dp"
+            android:layout_marginBottom="7dp"
+            app:layout_constraintBottom_toTopOf="@+id/space"
+            app:layout_constraintStart_toEndOf="@+id/editmix2"
+            app:layout_constraintTop_toBottomOf="@+id/space2" />
     </android.support.constraint.ConstraintLayout>
 
 

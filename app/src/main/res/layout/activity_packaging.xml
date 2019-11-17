@@ -125,6 +125,16 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView"
             tools:visibility="invisible" />
 
+        <TextView
+            android:id="@+id/nameitem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginBottom="48dp"
+            android:text="TextView"
+            app:layout_constraintBottom_toTopOf="@+id/getidpack"
+            app:layout_constraintStart_toStartOf="parent" />
+
     </android.support.constraint.ConstraintLayout>
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"

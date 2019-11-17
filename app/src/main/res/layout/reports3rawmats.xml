@@ -235,7 +235,8 @@
         android:layout_marginBottom="148dp"
         android:text="remaining"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:theme="@style/txt"/>
 
     <TextView
         android:id="@+id/remaining"
@@ -245,9 +246,9 @@
         android:layout_marginBottom="140dp"
         android:text="remaining"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline2" />
-    android:theme="@style/txt"
-    app:layout_constraintGuide_end="210dp" />
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+         android:theme="@style/txt"
+        />
 
 
 </android.support.constraint.ConstraintLayout>

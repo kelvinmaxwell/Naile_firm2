@@ -494,6 +494,7 @@ public void cal2(){
                 ArrayList<rawmateriasl> jsonConverter=new JsonConverter<rawmateriasl>().toArrayList(response, rawmateriasl.class);
 
                 BindDictionary<rawmateriasl> dictionary=new BindDictionary<>();
+
                 dictionary.addStringField(R.id.name, new StringExtractor<rawmateriasl>() {
                     @Override
                     public String getStringValue(rawmateriasl products, int position) {

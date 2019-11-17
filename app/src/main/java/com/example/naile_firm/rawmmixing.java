@@ -28,6 +28,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -47,6 +48,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -57,20 +59,23 @@ import java.util.ArrayList;
 import static android.R.layout.simple_spinner_item;
 
 public class rawmmixing extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
+    private ProgressBar loading;
     ConstraintLayout rootlayout;
     FloatingActionButton fbtnmix;
     private static ProgressDialog mProgressDialog;
     String url = "http://192.168.43.78/www/html/Naile_progect/mix.php";
     String url2 = "http://192.168.43.78/www/html/Naile_progect/get_products.php";
     String url3 = "http://192.168.43.78/www/html/Naile_progect/get_rawmat.php";
+    String urlconfirm = "http://192.168.43.78/www/html/Naile_progect/validatingmix.php";
 
     final String TAG=this.getClass().getSimpleName();
     private ArrayList<products2> statuscheckArrayList;
     private ArrayList<productsraw> statuscheckArrayList2;
+    private ArrayList<productsconfirm> statuscheckArrayList3;
 
     private ArrayList<String> names = new ArrayList<String>();
     private ArrayList<String> names2 = new ArrayList<String>();
+    private ArrayList<String> names3 = new ArrayList<String>();
    public Spinner spinner,editmix1,editmix2,editmix3;
 
     public EditText quantitymix1,quantitymix2,quantitymix3,timet,date;
@@ -78,7 +83,7 @@ public class rawmmixing extends AppCompatActivity implements NavigationView.OnNa
     public String timemix,datemix,namemix1,namemix2,namemix3,quantity1,quantity2,quantity3,desiredString1,desiredString2,typeexpected,desiredString3,mixid;
     DrawerLayout mdrawerLayout;
     private Toolbar toolbar;
-    public String idtype;
+    public String idtype,product1,product2,product3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +101,8 @@ public class rawmmixing extends AppCompatActivity implements NavigationView.OnNa
         quantitymix3=findViewById(R.id.rawmix3);
         mdrawerLayout=findViewById(R.id.drawerlayout2);
         toolbar=findViewById(R.id.toolBar2);
+        loading=findViewById(R.id.loading2);
+        loading.setVisibility(View.GONE);
 
 
 timepicker();
@@ -435,12 +442,9 @@ quantity3=quantitymix3.getText().toString();
                     Toast.makeText(getApplicationContext(), "please check the values of ur id and try again", Toast.LENGTH_LONG).show();
                 }
                 else {
+                    loading.setVisibility(View.VISIBLE);
+getjson2confirm();
 
-
-                    popup();
-                    getjson();
-
-                    Toast.makeText(getApplicationContext(), "SAVED", Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -632,6 +636,134 @@ quantity3=quantitymix3.getText().toString();
 
 
     }
+
+
+
+    private void getjson2confirm(){
+
+
+        //showSimpleProgressDialog(this, "Loading...","Fetching Json",true);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, urlconfirm,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        Log.d("strrrrr", ">>" + response);
+
+
+                        try {
+
+
+
+
+
+
+
+
+
+
+                            JSONObject obj = new JSONObject(response);
+                            if(obj.optString("status").equals("true")){
+
+                                statuscheckArrayList3 = new ArrayList<>();
+                                JSONArray dataArray  = obj.getJSONArray("data");
+
+                                for (int i = 0; i < dataArray.length(); i++) {
+
+                                    productsconfirm playerModel = new productsconfirm();
+                                    JSONObject dataobj = dataArray.getJSONObject(i);
+
+                                    playerModel.setName1(dataobj.getString("name1"));
+                                    playerModel.setName2(dataobj.getString("name2"));
+                                    playerModel.setName3(dataobj.getString("name3"));
+                                    playerModel.setName4(dataobj.getString("name4"));
+
+
+                                    statuscheckArrayList3.add(playerModel);
+
+                                }
+
+                                for (int i = 0; i < statuscheckArrayList3.size(); i++){
+                                     product1=statuscheckArrayList3.get(i).getName1();
+                                    product2=statuscheckArrayList3.get(i).getName2();
+                                    product3=statuscheckArrayList3.get(i).getName3();
+                                    names3.add(statuscheckArrayList3.get(i).getName4());
+                                    if(!product1.equalsIgnoreCase("good"))
+
+                                    {
+                                    Toast.makeText(getApplicationContext(), "not enough   :  "+product1  +"  please add stock", Toast.LENGTH_LONG).show();
+                                        loading.setVisibility(View.GONE);
+                                }
+                                if(!product2.equalsIgnoreCase("good")){
+
+
+                                    Toast.makeText(getApplicationContext(), "not enough   :   "+product2  +"  please add stock", Toast.LENGTH_LONG).show();
+                                    loading.setVisibility(View.GONE);
+                            }
+
+                            if(!product3.equalsIgnoreCase("good"))
+                            {
+
+                                Toast.makeText(getApplicationContext(), "not enough   : "+product3 +"  please add stock", Toast.LENGTH_LONG).show();
+                                loading.setVisibility(View.GONE);
+                        }
+                                if (statuscheckArrayList3.get(i).getName4().equalsIgnoreCase("save")) {
+                                    loading.setVisibility(View.GONE);
+                                    popup();
+                                    getjson();
+
+                                    Toast.makeText(getApplicationContext(), "SAVED", Toast.LENGTH_SHORT).show();
+                                }
+
+
+
+
+
+                            }
+
+                        } }catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //displaying the error in toast if occurrs
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+
+                quantity1=quantitymix1.getText().toString();
+                quantity2=quantitymix2.getText().toString();
+                quantity3=quantitymix3.getText().toString();
+                timemix=timet.getText().toString();
+                params.put("namemix1",namemix1);
+                params.put("namemix2",namemix2);
+                params.put("namemix3",namemix3);
+                params.put("quantity1",quantity1);
+                params.put("quantity2",quantity2);
+                params.put("quantity3",quantity3);
+                params.put("time",timemix);
+
+
+
+
+
+
+                return params;
+            }
+        };
+        MySingleton.getInstance(rawmmixing.this).addToRequestQueue(stringRequest);
+
+
+
+    }
+
 
 
 
