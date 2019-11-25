@@ -8,7 +8,7 @@
 
     android:id="@+id/tooBar"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    android:background="@mipmap/ic_launcher_foreground"
+    android:background="@mipmap/cow_round"
 
 
    >
