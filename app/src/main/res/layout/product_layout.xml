@@ -226,11 +226,35 @@ android:fontFamily="sans-serif-black"
         android:layout_alignParentEnd="true"
 
         android:layout_marginTop="540dp"
-        android:layout_marginEnd="263dp"
+        android:layout_marginEnd="254dp"
         android:hint="totals"
         android:paddingTop="10dp"
         android:textColor="@color/textboxcolor"
         android:textSize="10dp"
+        android:theme="@style/txt" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="132dp"
+        android:layout_height="48dp"
+        android:layout_below="@+id/totalsl"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="73dp"
+        android:layout_marginEnd="261dp"
+        android:text="date"
+        android:theme="@style/txt" />
+
+    <TextView
+        android:id="@+id/dateget"
+        android:layout_width="192dp"
+        android:layout_height="48dp"
+        android:layout_below="@+id/totals"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="31dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="62dp"
+        android:text="TextView"
         android:theme="@style/txt" />
 
 </RelativeLayout>

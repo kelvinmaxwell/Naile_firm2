@@ -1,6 +1,10 @@
 package com.example.naile_firm;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -30,7 +34,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class home extends AppCompatActivity   {
     private Toolbar toolbar;
     SessionManager sessionManager;
     Button btnmain,btnchuka,btnb,btnc;
@@ -62,12 +66,64 @@ btnchuka.setText(mlocation);
 
         Toast.makeText(getApplicationContext(),mName+mEmail,Toast.LENGTH_LONG).show();
 
-        //ActionBarDrawerToggle darwertoggle=new ActionBarDrawerToggle(this,mdrawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close);
+        ActionBarDrawerToggle darwertoggle=new ActionBarDrawerToggle(this,mdrawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close);
+secs();checkconn();checkconn2();
 
-localhome();
-        drawableb();
 
     }
+
+
+
+    public void secs(){
+        final Handler handler = new Handler();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                checkconn2();
+                handler.postDelayed(this, 10000);
+            }
+        }, 10000);
+    }
+
+
+
+
+    public void  checkconn2(){
+        ConnectivityManager conMgr = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if ( conMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED
+                || conMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED ) {
+
+
+
+
+        }
+        else if ( conMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.DISCONNECTED
+                || conMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.DISCONNECTED) {
+
+            Toast.makeText(getApplicationContext(), "YOU ARE OFFLINE", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void  checkconn(){
+        ConnectivityManager conMgr = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if ( conMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED
+                || conMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED ) {
+
+
+            localhome();
+          //  drawableb();
+
+        }
+        else if ( conMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.DISCONNECTED
+                || conMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.DISCONNECTED) {
+
+            Toast.makeText(getApplicationContext(), "YOU ARE OFFLINE", Toast.LENGTH_LONG).show();
+        }
+    }
+
+
 
     public void   localhome(){
         btnchuka.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +164,7 @@ localhome();
     }
 
 
-    public void drawableb(){
+    /*public void drawableb(){
         ActionBarDrawerToggle darwertoggle=new ActionBarDrawerToggle(this,mdrawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close);
   mdrawerLayout.addDrawerListener(darwertoggle);
   darwertoggle.syncState();
@@ -168,6 +224,7 @@ localhome();
                 break;
             case R.id.logout:
                sessionManager.logout();
+                (this).finish();
                 break;
 
         }
@@ -185,6 +242,6 @@ localhome();
     }
 
 
-
+*/
 
 }

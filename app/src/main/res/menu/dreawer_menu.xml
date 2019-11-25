@@ -11,7 +11,7 @@
                 android:title="home"/>
             <item android:id="@+id/addusers"
                 android:icon="@drawable/adduser"
-                android:title="home"/>
+                android:title="adduser"/>
 
             <item android:id="@+id/logout"
                 android:icon="@drawable/logout"
@@ -28,21 +28,32 @@
 
         <item android:id="@+id/productgen"
             android:icon="@drawable/productgen"
-            android:title="productgeneration"/>
+            android:title="packaging"/>
 
 
 
 
         <item android:id="@+id/nav_rawm_entry"
             android:icon="@drawable/feedraw"
-            android:title="feed_raw materials"/>
+            android:title="receive"/>
 
         <item android:id="@+id/nav_raw_mixing"
             android:icon="@drawable/mixing"
-            android:title="raw_material_mixing"/>
+            android:title="production"/>
         <item android:id="@+id/addproduct"
             android:icon="@drawable/add"
-            android:title="add product_description"
+            android:title="add new product"
+            />
+        <item android:id="@+id/addraw"
+            android:icon="@drawable/add"
+            android:title="add new raw description"
+            />
+        <item android:id="@+id/addcar"
+            android:icon="@drawable/add"
+            android:title="add new car"/>
+        <item android:id="@+id/addsupplier"
+            android:icon="@drawable/add"
+            android:title="add new supplier"
             />
 
 
@@ -85,9 +96,7 @@
 
                 />
 
-            <item android:id="@+id/lorriesreports"
-                android:icon="@drawable/statuslorry"
-                android:title="lorries"/>
+
 
 
         </menu>

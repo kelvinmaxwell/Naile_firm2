@@ -25,4 +25,6 @@ public class Products {
     public String time;
     @SerializedName("totals")
     public String totals;
+    @SerializedName("date")
+    public String date;
 }

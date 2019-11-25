@@ -14,6 +14,34 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
+        <activity android:name=".addsupplier">
+            <intent-filter>
+                <action android:name=".addsupplier" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".addcar">
+            <intent-filter>
+                <action android:name=".addcar" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".addnewrawmat">
+            <intent-filter>
+                <action android:name=".addnewrawmat" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".balances_chuka">
+            <intent-filter>
+                <action android:name=".balances_chuka" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".balances">
             <intent-filter>
                 <action android:name=".balances" />

@@ -52,22 +52,21 @@ import java.util.Map;
 
 import static android.R.layout.simple_spinner_item;
 
-public class balances extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class balances_chuka extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private ArrayList<String> names = new ArrayList<String>();
     final Calendar myCalendar = Calendar.getInstance();
     public Calendar myCalendar2=Calendar.getInstance();
-    public Spinner spinner;
+    public Spinner spinner,txt;
     final String TAG=this.getClass().getSimpleName();
     public ListView lvProduct;
     ArrayAdapter<CharSequence>adapter;
     String url = "http://192.168.43.78/www/html/Naile_progect/reports.php";
     String url2 = "http://192.168.43.78/www/html/Naile_progect/reports2.php";
     String url3 = "http://192.168.43.78/www/html/Naile_progect/reports3.php";
-    String url4 = "http://192.168.43.78/www/html/Naile_progect/selectcar.php";
-   public String name,id1,startdates,enddates;
-   public Button btn;
-  public  EditText startdate,enddate;
-  SessionManager sessionManager;
+    String url4 = "http://192.168.43.78/www/html/Naile_progect/reports4.php";
+    public String name,id1,startdates,enddates;
+    public Button btn;
+    public  EditText startdate,enddate;
 
     public String typeexpected;
     private static ProgressDialog mProgressDialog;
@@ -75,20 +74,22 @@ public class balances extends AppCompatActivity implements NavigationView.OnNavi
     private ArrayList<productsraw> statuscheckArrayList2;
     private ArrayList<productsconfirm> statuscheckArrayList3;
     public Spinner spinner2;
+    SessionManager sessionManager;
     DrawerLayout mdrawerLayout;
+
     private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_balances);
-       spinner=findViewById(R.id.spinner);
+        setContentView(R.layout.activity_balances_chuka);
+        spinner=findViewById(R.id.spinner);
         mdrawerLayout=findViewById(R.id.drawerlayout);
-        spinner2=findViewById(R.id.txt);
+        txt=findViewById(R.id.txt);
         lvProduct=findViewById(R.id.listview);
-        btn=findViewById(R.id.getdata);
+        btn=findViewById(R.id.getdatachuka);
         startdate=findViewById(R.id.startdate);
         enddate=findViewById(R.id.enddate);
-        secs();checkconn();checkconn2();datepicker();drawable();
+        secs();checkconn();checkconn2();datepicker();drawable2();
         sessionManager=new SessionManager(this);
 
     }
@@ -133,10 +134,17 @@ public class balances extends AppCompatActivity implements NavigationView.OnNavi
         if ( conMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED
                 || conMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED ) {
 
-getjson();
-            cal2();
 
-            spinner3();
+            cal2();
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    get_good_id();
+                }
+            });
+
+
+            //spinner3();
 
 
         }
@@ -151,7 +159,7 @@ getjson();
 
 
 
-    public void spinner3(){
+    public void spinner31(){
         adapter= ArrayAdapter.createFromResource(this,R.array.reports,android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -161,35 +169,12 @@ getjson();
 
                 Toast.makeText(getBaseContext(),parent.getItemAtPosition(position)+"selected",Toast.LENGTH_LONG).show();
                 name=parent.getItemAtPosition(position).toString();
-                if(name.equalsIgnoreCase("vehicle reports")){
 
-                    spinner2.setVisibility(View.VISIBLE);
 
-                    btn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            get_good_id();
-                        }
-                    });
 
-                }else if(name.equalsIgnoreCase("production balances")){
-                    spinner2.setVisibility(View.GONE);
-                btn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        get_good_id2();
-                    }
-            });}
-            else if(name.equalsIgnoreCase("raw materials balances")){
-                    spinner2.setVisibility(View.GONE);
-                    btn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            get_good_id3();
-                        }
-                    });
 
-                }}
+
+                }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -203,89 +188,113 @@ getjson();
 
     public void get_good_id(){
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url4, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d(TAG,response);
-                ArrayList<reports> jsonConverter=new JsonConverter<reports>().toArrayList(response, reports.class);
+                ArrayList<chuka_balances> jsonConverter=new JsonConverter<chuka_balances>().toArrayList(response, chuka_balances.class);
 
-                BindDictionary<reports> dictionary=new BindDictionary<>();
-                dictionary.addStringField(R.id.name, new StringExtractor<reports>() {
+                BindDictionary<chuka_balances> dictionary=new BindDictionary<>();
+                dictionary.addStringField(R.id.name, new StringExtractor<chuka_balances>() {
                     @Override
-                    public String getStringValue(reports products, int position) {
+                    public String getStringValue( chuka_balances products, int position) {
 
 
 
-                        return products.car_number;
+                        return products.id;
 
 
 
                     }
                 });
-                dictionary.addStringField(R.id.trans_type, new StringExtractor<reports>() {
+                dictionary.addStringField(R.id.trans_type, new StringExtractor<chuka_balances>() {
                     @Override
-                    public String getStringValue(reports products, int position) {
+                    public String getStringValue(chuka_balances products, int position) {
 
 
 
-                        return products.transtype ;
-
-
-
-                    }
-                });
-
-                dictionary.addStringField(R.id.transquantity, new StringExtractor<reports>() {
-                    @Override
-                    public String getStringValue(reports products, int position) {
-
-
-
-                        return products.transquantity ;
-
-
-
-                    }
-                });
-                dictionary.addStringField(R.id.transdate, new StringExtractor<reports>() {
-                    @Override
-                    public String getStringValue(reports products, int position) {
-
-
-
-                        return products.transdate;
-
-
-
-                    }
-                });
-                dictionary.addStringField(R.id.transtime, new StringExtractor<reports>() {
-                    @Override
-                    public String getStringValue(reports products, int position) {
-
-
-
-                        return products.transtime;
-
-
-
-                    }
-                });
-                dictionary.addStringField(R.id.transid, new StringExtractor<reports>() {
-                    @Override
-                    public String getStringValue(reports products, int position) {
-
-
-
-                        return products.transid;
+                        return products.arrivname ;
 
 
 
                     }
                 });
 
+                dictionary.addStringField(R.id.transquantity, new StringExtractor<chuka_balances>() {
+                    @Override
+                    public String getStringValue(chuka_balances products, int position) {
 
-                FunDapter<reports> adapter=new FunDapter<>(getApplicationContext(),jsonConverter,R.layout.reports,dictionary);
+
+
+                        return products.arrivtype ;
+
+
+
+                    }
+                });
+                dictionary.addStringField(R.id.transdate, new StringExtractor<chuka_balances>() {
+                    @Override
+                    public String getStringValue(chuka_balances products, int position) {
+
+
+
+                        return products.arrivquantity;
+
+
+
+                    }
+                });
+                dictionary.addStringField(R.id.transtime, new StringExtractor<chuka_balances>() {
+                    @Override
+                    public String getStringValue(chuka_balances products, int position) {
+
+
+
+                        return products.arrivdate;
+
+
+
+                    }
+                });
+                dictionary.addStringField(R.id.transid, new StringExtractor<chuka_balances>() {
+                    @Override
+                    public String getStringValue(chuka_balances products, int position) {
+
+
+
+                        return products.arrivtime;
+
+
+
+                    }
+                });
+                dictionary.addStringField(R.id.namearriv, new StringExtractor<chuka_balances>() {
+                    @Override
+                    public String getStringValue(chuka_balances products, int position) {
+
+
+
+                        return products.arrivid;
+
+
+
+                    }
+                });
+                dictionary.addStringField(R.id.namearriv2, new StringExtractor<chuka_balances>() {
+                    @Override
+                    public String getStringValue(chuka_balances products, int position) {
+
+
+
+                        return products.location;
+
+
+
+                    }
+                });
+
+
+                FunDapter<chuka_balances> adapter=new FunDapter<>(getApplicationContext(),jsonConverter,R.layout.reports1,dictionary);
                 lvProduct.setAdapter(adapter);
 
             }
@@ -303,13 +312,13 @@ getjson();
 
 
 
-startdates=startdate.getText().toString();
-enddates=enddate.getText().toString();
-               // id1=txt.getText().toString();
+                startdates=startdate.getText().toString();
+                enddates=enddate.getText().toString();
 
 
 
-                params.put("id", id1);
+
+
                 params.put("startdate",startdates);
                 params.put("enddate",enddates);
 
@@ -319,7 +328,7 @@ enddates=enddate.getText().toString();
                 return params;
             }
         };
-        MySingleton.getInstance(balances.this).addToRequestQueue(stringRequest);
+        MySingleton.getInstance(balances_chuka.this).addToRequestQueue(stringRequest);
 
 
     }
@@ -348,44 +357,44 @@ enddates=enddate.getText().toString();
             public void onClick(View v) {
 
                 // TODO Auto-generated method stub
-                new DatePickerDialog(balances.this, date, myCalendar
+                new DatePickerDialog(balances_chuka.this, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
-}
+    }
 
 
-public void cal2(){
-    final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+    public void cal2(){
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear,
-                              int dayOfMonth) {
-            // TODO Auto-generated method stub
-            myCalendar2.set(Calendar.YEAR, year);
-            myCalendar2.set(Calendar.MONTH, monthOfYear);
-            myCalendar2.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar2.set(Calendar.YEAR, year);
+                myCalendar2.set(Calendar.MONTH, monthOfYear);
+                myCalendar2.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-            updateLabel();
-        }
+                updateLabel();
+            }
 
-    };
+        };
 
-    startdate.setOnClickListener(new View.OnClickListener() {
+        startdate.setOnClickListener(new View.OnClickListener() {
 
-        @Override
-        public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
 
-            // TODO Auto-generated method stub
-            new DatePickerDialog(balances.this, date, myCalendar2
-                    .get(Calendar.YEAR), myCalendar2.get(Calendar.MONTH),
-                    myCalendar2.get(Calendar.DAY_OF_MONTH)).show();
-        }
-    });
+                // TODO Auto-generated method stub
+                new DatePickerDialog(balances_chuka.this, date, myCalendar2
+                        .get(Calendar.YEAR), myCalendar2.get(Calendar.MONTH),
+                        myCalendar2.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
 
-}
+    }
     private void updateLabel() {
         String myFormat = "YYYY-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ENGLISH);
@@ -560,7 +569,7 @@ public void cal2(){
                 return params;
             }
         };
-        MySingleton.getInstance(balances.this).addToRequestQueue(stringRequest);
+        MySingleton.getInstance(balances_chuka.this).addToRequestQueue(stringRequest);
 
 
     }
@@ -681,7 +690,7 @@ public void cal2(){
 
                 startdates=startdate.getText().toString();
                 enddates=enddate.getText().toString();
-               // id1=txt.getText().toString();
+                //id1=txt.getText().toString();
 
 
 
@@ -695,12 +704,14 @@ public void cal2(){
                 return params;
             }
         };
-        MySingleton.getInstance(balances.this).addToRequestQueue(stringRequest);
+        MySingleton.getInstance(balances_chuka.this).addToRequestQueue(stringRequest);
 
 
     }
 
-    public void drawable(){
+
+    public void drawable2(){
+
         ActionBarDrawerToggle darwertoggle=new ActionBarDrawerToggle(this,mdrawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close);
         mdrawerLayout.addDrawerListener(darwertoggle);
         darwertoggle.syncState();
@@ -712,69 +723,26 @@ public void cal2(){
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
         switch (menuItem.getItemId()){
-            case R.id.nav_rawm_entry:
-                Intent i=new Intent(".rawm_entry");
+            case R.id.nav_home:
+                Intent i=new Intent(".home");
                 startActivity(i);
                 break;
-            case R.id.nav_raw_mixing:
-                Intent i2=new Intent(".rawmmixing");
+            case R.id.nav_arriv_chuka:
+                Intent i2=new Intent(".arrivals_chuka");
                 startActivity(i2);
                 break;
-            case R.id.nav_get_contents:
-                Intent i3=new Intent(".get_products_contents");
-                startActivity(i3);
-                break;
-            case R.id.nav_home:
-                Intent i4=new Intent(".home");
-                startActivity(i4);
-                break;
-            case R.id.trans_chuka:
-                Intent i8=new Intent(".transist");
-                startActivity(i8);
-                break;
-
-            case R.id.nav_arriv_chuka:
-                Intent i6=new Intent(".arrivals_chuka");
-                startActivity(i6);
-                break;
             case R.id.status_chuka:
-                Intent i7=new Intent(".status");
-                startActivity(i7);
-                break;
-
-            case R.id.addproduct:
-                Intent i13=new Intent(".addproducts");
-                startActivity(i13);
-                break;
-            case R.id.productgen:
-                Intent i14=new Intent(".packaging");
-                startActivity(i14);
-                break;
-            case R.id.reports:
-                Intent i1r=new Intent(".balances");
-                startActivity(i1r);
-                break;
-            case R.id.addusers:
-                Intent i2r=new Intent(".addusers");
-                startActivity(i2r);
-                break;
-
-            case R.id.addraw:
-                Intent i2r1=new Intent(".addnewrawmat");
-                startActivity(i2r1);
-                break;
-            case R.id.addcar:
-                Intent i2r2=new Intent(".addcar");
-                startActivity(i2r2);
-                break;
-            case R.id.addsupplier:
-                Intent i2r21=new Intent(".addsupplier");
-                startActivity(i2r21);
+                Intent i3=new Intent(".status");
+                startActivity(i3);
                 break;
             case R.id.logout:
                 sessionManager.logout();
                 (this).finish();
                 break;
+
+
+
+
 
         }
         mdrawerLayout.closeDrawer(GravityCompat.START);
@@ -788,6 +756,7 @@ public void cal2(){
         } else{
             super.onBackPressed();}
 
+
     }
 
     private void getjson(){
@@ -795,7 +764,7 @@ public void cal2(){
 
         showSimpleProgressDialog(this, "Loading...","Fetching Json",true);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url4,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url2,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -839,16 +808,16 @@ public void cal2(){
                                 }
 
 
-                                ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(balances.this,simple_spinner_item, names);
+                                ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(balances_chuka.this,simple_spinner_item, names);
                                 spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
-                                spinner2.setAdapter(spinnerArrayAdapter);
-                                spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                spinner.setAdapter(spinnerArrayAdapter);
+                                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                     @Override
                                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                         String slectedname = parent.getItemAtPosition(position).toString();
 
                                         Toast.makeText(getApplicationContext(), "Entered: "+slectedname, Toast.LENGTH_LONG).show();
-                                       id1=slectedname;
+                                        typeexpected=slectedname;
 
                                     }
 
@@ -859,8 +828,6 @@ public void cal2(){
                                 });
                                 removeSimpleProgressDialog();
 
-                            }else {
-                                Toast.makeText(getApplicationContext(),"no data specified exist",Toast.LENGTH_SHORT).show();
                             }
 
                         } catch (JSONException e) {
@@ -888,7 +855,8 @@ public void cal2(){
 
     }
 
-    private void showSimpleProgressDialog(balances addcar, String s, String fetching_json, boolean b) {
+    private void showSimpleProgressDialog(balances_chuka addcar, String s, String fetching_json, boolean b) {
     }
+
 
 }

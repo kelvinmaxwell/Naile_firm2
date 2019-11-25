@@ -4,8 +4,12 @@ package com.example.naile_firm;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -82,6 +86,7 @@ public Button btn;
         idtxt=findViewById(R.id.arrividtxt);
         mdrawerLayout=findViewById(R.id.drawerlayout_chuka);
         toolbar=findViewById(R.id.toolBar2);
+        rawmatspinner.setVisibility(View.INVISIBLE);
 btn=findViewById(R.id.button2);
         sessionManager=new SessionManager(this);
         sessionManager.checkLogin();
@@ -90,18 +95,82 @@ btn=findViewById(R.id.button2);
         mEmail=user.get(sessionManager.EMAIL);
         mprevelage=user.get(SessionManager.PREVELAGE);
         mlocation=user.get(sessionManager.LOCATION);
+
+        checkconn2();
+        checkconn();
+        secs();
         drawable2();
-        spinner();
         datepicker();
         timepicker();
-
-        save_raw_mat_data();
-        getjson();
         clock();
+
         btn.setText(mlocation);
     }
 
-     public void clock(){
+
+
+
+    public void secs(){
+        final Handler handler = new Handler();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                checkconn2();
+                handler.postDelayed(this, 10000);
+            }
+        }, 10000);
+    }
+
+
+
+
+    public void  checkconn2(){
+        ConnectivityManager conMgr = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if ( conMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED
+                || conMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED ) {
+
+
+
+
+        }
+        else if ( conMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.DISCONNECTED
+                || conMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.DISCONNECTED) {
+
+            Toast.makeText(getApplicationContext(), "YOU ARE OFFLINE", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void  checkconn(){
+        ConnectivityManager conMgr = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if ( conMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED
+                || conMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED ) {
+
+
+
+            spinner();
+
+            save_raw_mat_data();
+            getjson();
+
+
+
+        }
+        else if ( conMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.DISCONNECTED
+                || conMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.DISCONNECTED) {
+
+            Toast.makeText(getApplicationContext(), "YOU ARE OFFLINE", Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+
+
+
+
+
+    public void clock(){
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -248,7 +317,7 @@ btn=findViewById(R.id.button2);
         ActionBarDrawerToggle darwertoggle=new ActionBarDrawerToggle(this,mdrawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close);
         mdrawerLayout.addDrawerListener(darwertoggle);
         darwertoggle.syncState();
-        NavigationView nav_view=findViewById(R.id.nav_viewchuka);
+        NavigationView nav_view=findViewById(R.id.nav_view);
         nav_view.setNavigationItemSelectedListener(this);
     }
 
@@ -267,6 +336,20 @@ btn=findViewById(R.id.button2);
             case R.id.status_chuka:
                 Intent i3=new Intent(".status");
                 startActivity(i3);
+                break;
+            case R.id.nav_balances:
+                if(mprevelage.equalsIgnoreCase("ADMIN")||mprevelage.equalsIgnoreCase("management")){
+                    Intent i5=new Intent(".balances_chuka");
+                    startActivity(i5);
+                }else{
+
+                    Toast.makeText(getApplicationContext(),"access denied,contact management",Toast.LENGTH_SHORT).show();
+                }
+
+                break;
+            case R.id.logout:
+                sessionManager.logout();
+                (this).finish();
                 break;
 
 
@@ -342,6 +425,8 @@ btn=findViewById(R.id.button2);
 
 
 
+                            }else {
+                                Toast.makeText(getApplicationContext(),"no data specified exist",Toast.LENGTH_SHORT).show();
                             }
 
                         } catch (JSONException e) {

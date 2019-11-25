@@ -54,9 +54,14 @@ login();
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(loginname.getText().toString().equalsIgnoreCase("") || loginpassword.getText().toString().equalsIgnoreCase(""))
+                {
+                    Toast.makeText(getApplicationContext(),"check the credentilas",Toast.LENGTH_SHORT).show();
+                }
+                else{
                 save_raw_mat_dat();
                 loading.setVisibility(View.VISIBLE);
-            }
+            }}
         });
     }
 

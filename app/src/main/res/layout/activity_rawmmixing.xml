@@ -179,6 +179,7 @@ then the quantites"
             app:layout_constraintBottom_toTopOf="@+id/space"
             app:layout_constraintStart_toEndOf="@+id/editmix2"
             app:layout_constraintTop_toBottomOf="@+id/space2" />
+
     </android.support.constraint.ConstraintLayout>
 
 

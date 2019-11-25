@@ -14,28 +14,32 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <include
-            layout="@layout/toolbar2"/>
+            layout="@layout/toolbar2"/><![CDATA[
 
 
-        <EditText
+        "/>
+
+        ]]>
+
+        <Spinner
             android:id="@+id/transtypetxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/txt"
-
             android:layout_marginTop="41dp"
-            android:hint="Type on transist"
+
+            android:hint="Type on transist eg polland"
             android:textColor="@color/textboxcolor"
             android:textSize="10dp"
+            android:theme="@style/txt"
             app:layout_constraintTop_toBottomOf="@+id/transspinner"
             tools:layout_editor_absoluteX="0dp" />
-        "/>
 
         <EditText
             android:id="@+id/transquantitytxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
+            android:inputType="number"
             android:theme="@style/txt"
             android:hint="quantity on transist"
             android:textColor="@color/textboxcolor"
@@ -47,7 +51,7 @@
             android:id="@+id/transtimetxt"
             android:layout_width="181dp"
             android:layout_height="33dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="56dp"
             android:clickable="true"
             android:editable="false"
             android:focusable="false"
@@ -81,23 +85,24 @@
             android:id="@+id/transidtxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="36dp"
             android:hint="Identification"
             android:textColor="@color/textboxcolor"
             android:textSize="10dp"
             android:theme="@style/txt"
-            app:layout_constraintTop_toBottomOf="@+id/transtimetxt"
-            tools:layout_editor_absoluteX="0dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/transtimetxt" />
 
-        <EditText
+        <Spinner
             android:id="@+id/transspinner"
-            android:theme="@style/txt"
-            android:hint="where to"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="300dp"
+            android:hint="car-number"
             android:textColor="@color/textboxcolor"
             android:textSize="10dp"
+            android:theme="@style/txt"
 
 
             app:layout_constraintTop_toTopOf="parent"

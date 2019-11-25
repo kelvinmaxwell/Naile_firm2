@@ -67,11 +67,13 @@ public class rawmmixing extends AppCompatActivity implements NavigationView.OnNa
     String url2 = "http://192.168.43.78/www/html/Naile_progect/get_products.php";
     String url3 = "http://192.168.43.78/www/html/Naile_progect/get_rawmat.php";
     String urlconfirm = "http://192.168.43.78/www/html/Naile_progect/validatingmix.php";
+    String urlconfirmp1= "http://192.168.43.78/www/html/Naile_progect/mixcomfirm1.php";
 
     final String TAG=this.getClass().getSimpleName();
     private ArrayList<products2> statuscheckArrayList;
     private ArrayList<productsraw> statuscheckArrayList2;
     private ArrayList<productsconfirm> statuscheckArrayList3;
+    SessionManager sessionManager;
 
     private ArrayList<String> names = new ArrayList<String>();
     private ArrayList<String> names2 = new ArrayList<String>();
@@ -79,11 +81,12 @@ public class rawmmixing extends AppCompatActivity implements NavigationView.OnNa
    public Spinner spinner,editmix1,editmix2,editmix3;
 
     public EditText quantitymix1,quantitymix2,quantitymix3,timet,date;
+    public  TextView confirm11,confirm2,confirm3;
     ArrayAdapter<CharSequence>adapter;
     public String timemix,datemix,namemix1,namemix2,namemix3,quantity1,quantity2,quantity3,desiredString1,desiredString2,typeexpected,desiredString3,mixid;
     DrawerLayout mdrawerLayout;
     private Toolbar toolbar;
-    public String idtype,product1,product2,product3;
+    public String idtype,product1,product2,product3,confirm1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +96,7 @@ public class rawmmixing extends AppCompatActivity implements NavigationView.OnNa
         editmix2=findViewById(R.id.editmix2);
         editmix3=findViewById(R.id.editmix3);
         timet=findViewById(R.id.timetxtmix);
-
+        sessionManager=new SessionManager(this);
         rootlayout=findViewById(R.id.rootlayout);
 
         quantitymix1=findViewById(R.id.rawmix1);
@@ -105,10 +108,11 @@ public class rawmmixing extends AppCompatActivity implements NavigationView.OnNa
         loading.setVisibility(View.GONE);
 
 
+
 timepicker();
 getjsonraw();
 
-        drawable2();
+        drawable();
 
         checkconn();
 secs();
@@ -452,8 +456,7 @@ getjson2confirm();
             }
 
         });}
-    public void drawable2(){
-
+    public void drawable(){
         ActionBarDrawerToggle darwertoggle=new ActionBarDrawerToggle(this,mdrawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close);
         mdrawerLayout.addDrawerListener(darwertoggle);
         darwertoggle.syncState();
@@ -481,7 +484,10 @@ getjson2confirm();
                 Intent i4=new Intent(".home");
                 startActivity(i4);
                 break;
-
+            case R.id.trans_chuka:
+                Intent i8=new Intent(".transist");
+                startActivity(i8);
+                break;
 
             case R.id.nav_arriv_chuka:
                 Intent i6=new Intent(".arrivals_chuka");
@@ -492,15 +498,38 @@ getjson2confirm();
                 startActivity(i7);
                 break;
 
-
-            case R.id.trans_chuka:
-                Intent i8=new Intent(".transist");
-                startActivity(i8);
+            case R.id.addproduct:
+                Intent i13=new Intent(".addproducts");
+                startActivity(i13);
                 break;
-
+            case R.id.productgen:
+                Intent i14=new Intent(".packaging");
+                startActivity(i14);
+                break;
             case R.id.reports:
                 Intent i1r=new Intent(".balances");
                 startActivity(i1r);
+                break;
+            case R.id.addusers:
+                Intent i2r=new Intent(".addusers");
+                startActivity(i2r);
+                break;
+
+            case R.id.addraw:
+                Intent i2r1=new Intent(".addnewrawmat");
+                startActivity(i2r1);
+                break;
+            case R.id.addcar:
+                Intent i2r2=new Intent(".addcar");
+                startActivity(i2r2);
+                break;
+            case R.id.addsupplier:
+                Intent i2r21=new Intent(".addsupplier");
+                startActivity(i2r21);
+                break;
+            case R.id.logout:
+                sessionManager.logout();
+                (this).finish();
                 break;
 
         }
@@ -515,10 +544,7 @@ getjson2confirm();
         } else{
             super.onBackPressed();}
 
-
     }
-
-
 
     private void getjsonraw(){
 
@@ -546,8 +572,8 @@ getjson2confirm();
                                     productsraw playerModel = new productsraw();
                                     JSONObject dataobj = dataArray.getJSONObject(i);
 
-                                    playerModel.setId(dataobj.getString("id"));
-                                    playerModel.setType(dataobj.getString("type"));
+                                    playerModel.setId(dataobj.getString("index1"));
+                                    playerModel.setType(dataobj.getString("infor"));
 
 
                                     statuscheckArrayList2.add(playerModel);
@@ -571,6 +597,9 @@ getjson2confirm();
                                         Toast.makeText(getApplicationContext(), "Entered: "+slectedname1, Toast.LENGTH_LONG).show();
                                         namemix1=slectedname1;
 
+                                        confirm1=slectedname1;
+                                      //  retrieveJSON2(confirm1);
+
                                     }
 
                                     @Override
@@ -588,6 +617,10 @@ getjson2confirm();
                                         Toast.makeText(getApplicationContext(), "Entered: "+slectedname2, Toast.LENGTH_LONG).show();
                                         namemix2=slectedname2;
 
+                                       // retrieveJSON22(namemix2);
+
+
+
                                     }
 
                                     @Override
@@ -603,6 +636,7 @@ getjson2confirm();
 
                                         Toast.makeText(getApplicationContext(), "Entered: "+slectedname3, Toast.LENGTH_LONG).show();
                                         namemix3=slectedname3;
+                                       // retrieveJSON3(namemix3);
 
                                     }
 
@@ -765,6 +799,239 @@ getjson2confirm();
     }
 
 
+    private void retrieveJSON2(final String confirm1) {
+
+        //   showSimpleProgressDialog(this, "Loading...", "Fetching Json", false);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, urlconfirmp1,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        Log.d("strrrrr", ">>" + response);
+
+
+                        try {
+
+                            JSONObject obj = new JSONObject(response);
+                            if (obj.optString("status").equals("true")) {
+
+                                statuscheckArrayList = new ArrayList<>();
+                                JSONArray dataArray = obj.getJSONArray("data");
+
+                                for (int i = 0; i < dataArray.length(); i++) {
+
+                                    id3 playerModel = new id3();
+                                    JSONObject dataobj = dataArray.getJSONObject(i);
+
+                                    playerModel.setid(dataobj.getString("id"));
+
+                                    String type=dataobj.getString("id");
+
+                                   // confirm11.setText(type);
+
+                                }
+
+
+
+
+
+
+
+
+
+
+
+
+                                removeSimpleProgressDialog();
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //displaying the error in toast if occurrs
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+
+
+
+
+
+                params.put("id",confirm1);
+
+                return params;
+            }
+        };
+        MySingleton.getInstance(rawmmixing.this).addToRequestQueue(stringRequest);
+
+
+    }
+
+
+    private void retrieveJSON22(final String confirm1) {
+
+        //   showSimpleProgressDialog(this, "Loading...", "Fetching Json", false);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, urlconfirmp1,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        Log.d("strrrrr", ">>" + response);
+
+
+                        try {
+
+                            JSONObject obj = new JSONObject(response);
+                            if (obj.optString("status").equals("true")) {
+
+                                statuscheckArrayList = new ArrayList<>();
+                                JSONArray dataArray = obj.getJSONArray("data");
+
+                                for (int i = 0; i < dataArray.length(); i++) {
+
+                                    id3 playerModel = new id3();
+                                    JSONObject dataobj = dataArray.getJSONObject(i);
+
+                                    playerModel.setid(dataobj.getString("id"));
+
+                                    String type=dataobj.getString("id");
+
+                                 //   confirm11.setText(type);
+
+                                }
+
+
+
+
+
+
+
+
+
+
+
+
+                                removeSimpleProgressDialog();
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //displaying the error in toast if occurrs
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+
+
+
+
+
+                params.put("id",confirm1);
+
+                return params;
+            }
+        };
+        MySingleton.getInstance(rawmmixing.this).addToRequestQueue(stringRequest);
+
+
+    }
+    private void retrieveJSON3(final String confirm1) {
+
+        //   showSimpleProgressDialog(this, "Loading...", "Fetching Json", false);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, urlconfirmp1,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        Log.d("strrrrr", ">>" + response);
+
+
+                        try {
+
+                            JSONObject obj = new JSONObject(response);
+                            if (obj.optString("status").equals("true")) {
+
+                                statuscheckArrayList = new ArrayList<>();
+                                JSONArray dataArray = obj.getJSONArray("data");
+
+                                for (int i = 0; i < dataArray.length(); i++) {
+
+                                    id3 playerModel = new id3();
+                                    JSONObject dataobj = dataArray.getJSONObject(i);
+
+                                    playerModel.setid(dataobj.getString("id"));
+
+                                    String type=dataobj.getString("id");
+
+                             //       confirm11.setText(type);
+
+                                }
+
+
+
+
+
+
+
+
+
+
+
+
+                                removeSimpleProgressDialog();
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //displaying the error in toast if occurrs
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+
+
+
+
+
+                params.put("id",confirm1);
+
+                return params;
+            }
+        };
+        MySingleton.getInstance(rawmmixing.this).addToRequestQueue(stringRequest);
+
+
+    }
 
 
 

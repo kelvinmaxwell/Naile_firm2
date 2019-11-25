@@ -39,11 +39,13 @@ import java.util.Map;
 public class get_products_contents extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener  {
     final String TAG=this.getClass().getSimpleName();
     ListView lvProduct;
+
     String url = "http://192.168.43.78/www/html/Naile_progect/get_good_content.php";
     public Button getdata;
     public EditText getid;
     DrawerLayout mdrawerLayout;
     private Toolbar toolbar;
+    SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,15 +55,15 @@ public class get_products_contents extends AppCompatActivity  implements Navigat
         mdrawerLayout=findViewById(R.id.drawerlayout);
         toolbar=findViewById(R.id.toolBar2);
         setSupportActionBar(toolbar);
+        sessionManager=new SessionManager(this);
         getid=findViewById(R.id.getid);
+        getdata=findViewById(R.id.getdata);
+        drawable();
+        checkconn();
+        secs();
 
 
 
-
-getdata=findViewById(R.id.getdata);
-        drawableb();
-checkconn();
-secs();
     }
     public void secs(){
         final Handler handler = new Handler();
@@ -141,6 +143,7 @@ secs();
                 @Override
                 public void onResponse(String response) {
                     Log.d(TAG,response);
+
                     ArrayList<Products> jsonConverter=new JsonConverter<Products>().toArrayList(response, Products.class);
 
                     BindDictionary<Products> dictionary=new BindDictionary<>();
@@ -266,6 +269,18 @@ secs();
 
                         }
                     });
+                    dictionary.addStringField(R.id.dateget, new StringExtractor<Products>() {
+                        @Override
+                        public String getStringValue(Products products, int position) {
+
+
+
+                            return products.date;
+
+
+
+                        }
+                    });
 
                     FunDapter<Products> adapter=new FunDapter<>(getApplicationContext(),jsonConverter,R.layout.product_layout,dictionary);
                     lvProduct.setAdapter(adapter);
@@ -301,12 +316,11 @@ secs();
 
         }
 
-    public void drawableb(){
-        NavigationView nav_view=findViewById(R.id.nav_view);
+    public void drawable(){
         ActionBarDrawerToggle darwertoggle=new ActionBarDrawerToggle(this,mdrawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close);
         mdrawerLayout.addDrawerListener(darwertoggle);
         darwertoggle.syncState();
-
+        NavigationView nav_view=findViewById(R.id.nav_view);
         nav_view.setNavigationItemSelectedListener(this);
     }
 
@@ -344,9 +358,38 @@ secs();
                 startActivity(i7);
                 break;
 
+            case R.id.addproduct:
+                Intent i13=new Intent(".addproducts");
+                startActivity(i13);
+                break;
+            case R.id.productgen:
+                Intent i14=new Intent(".packaging");
+                startActivity(i14);
+                break;
             case R.id.reports:
                 Intent i1r=new Intent(".balances");
                 startActivity(i1r);
+                break;
+            case R.id.addusers:
+                Intent i2r=new Intent(".addusers");
+                startActivity(i2r);
+                break;
+
+            case R.id.addraw:
+                Intent i2r1=new Intent(".addnewrawmat");
+                startActivity(i2r1);
+                break;
+            case R.id.addcar:
+                Intent i2r2=new Intent(".addcar");
+                startActivity(i2r2);
+                break;
+            case R.id.addsupplier:
+                Intent i2r21=new Intent(".addsupplier");
+                startActivity(i2r21);
+                break;
+            case R.id.logout:
+                sessionManager.logout();
+                (this).finish();
                 break;
 
         }
@@ -362,5 +405,9 @@ secs();
             super.onBackPressed();}
 
     }
+
+
+
+
 
 }

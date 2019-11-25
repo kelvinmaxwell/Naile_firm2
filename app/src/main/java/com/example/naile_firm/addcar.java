@@ -1,8 +1,10 @@
 package com.example.naile_firm;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -13,6 +15,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -48,52 +51,44 @@ import java.util.Map;
 
 import static android.R.layout.simple_spinner_item;
 
-public class rawm_entry extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class addcar extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     final Calendar myCalendar = Calendar.getInstance();
-    Spinner rawmatspinner;
-    ArrayAdapter<CharSequence>adapter;
-    public String type,quantity,time,id,name,date,typeexpected;
-   public EditText typetxt,quantitytxt,timetxt,datetxt,idtxt;
-   int quantity2;
-    public FloatingActionButton myFab;
+    public FloatingActionButton myFab,myFab2;
+    public String name;
+    public EditText nametxt;
+
     final String TAG=this.getClass().getSimpleName();
-    String url = "http://192.168.43.78/www/html/Naile_progect/insert_raw_mat.php";
-    String url2 = "http://192.168.43.78/www/html/Naile_progect/selectraw.php";
-    String url3 = "http://192.168.43.78/www/html/Naile_progect/selectsuplier.php";
+    String url = "http://192.168.43.78/www/html/Naile_progect/addcar.php";
+    String url2 = "http://192.168.43.78/www/html/Naile_progect/selectcar.php";
+    String url3 = "http://192.168.43.78/www/html/Naile_progect/deletecar.php";
     DrawerLayout mdrawerLayout;
     private Toolbar toolbar;
     private ArrayList<String> names = new ArrayList<String>();
+    public String typeexpected;
+    private static ProgressDialog mProgressDialog;
     private ArrayList<deleteraw> statuscheckArrayList;
-    private ArrayList<String> names1 = new ArrayList<String>();
-    private ArrayList<deleteraw> statuscheckArrayList1;
     private ArrayList<productsraw> statuscheckArrayList2;
     private ArrayList<productsconfirm> statuscheckArrayList3;
-    public Spinner spinner,spinnersup;
+    public Spinner spinner;
     SessionManager sessionManager;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rawm_entry);
-       // rawmatspinner=findViewById(R.id.spinner);
-        spinnersup=findViewById(R.id.spinnersup);
-        spinner=findViewById(R.id.typetxt);
-        quantitytxt=findViewById(R.id.quantitytxt);
-        datetxt=findViewById(R.id.datetxt);
-        timetxt=findViewById(R.id.timetxt);
-        idtxt=findViewById(R.id.idtxt);
+        setContentView(R.layout.activity_addcar);
         mdrawerLayout=findViewById(R.id.drawerlayout);
-        toolbar=findViewById(R.id.toolBar2);
+        spinner=findViewById(R.id.spinner2rawmmat);
+        nametxt=findViewById(R.id.name);
         sessionManager=new SessionManager(this);
-drawable();
 
-        datepicker();
-        timepicker();
         checkconn();
-
-secs();
+        secs();
+        drawable();
+        click();
     }
+
+
     public void secs(){
         final Handler handler = new Handler();
         new Handler().postDelayed(new Runnable() {
@@ -125,14 +120,18 @@ secs();
         }
     }
 
-
     public void  checkconn(){
         ConnectivityManager conMgr = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
 
         if ( conMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED
                 || conMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED ) {
-getjson();
-getjson2();
+
+
+
+            getjson();
+            datepicker();
+
+
             save_raw_mat_data();
 
         }
@@ -144,34 +143,9 @@ getjson2();
     }
 
 
-    public void timepicker(){
-        timetxt.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Calendar mcurrentTime = Calendar.getInstance();
-                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = mcurrentTime.get(Calendar.MINUTE);
-
-
-                TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(rawm_entry.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        timetxt.setText( selectedHour + ":" + selectedMinute);
-                    }
-                }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle("Select Time");
-                mTimePicker.show();
-
-            }
-        });
-
-    }
 
     public void  datepicker(){
-       final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
@@ -181,89 +155,65 @@ getjson2();
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                updateLabel();
+
             }
 
         };
 
-        datetxt.setOnClickListener(new View.OnClickListener() {
 
-            @Override
+    }
+
+
+
+
+
+
+
+
+
+
+    public void save_raw_mat_data() {
+
+        myFab = findViewById(R.id.floatbtn);
+        myFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                if (nametxt.getText().toString().equals("")) {
+                    Toast.makeText(addcar.this,"You did not enter a name", Toast.LENGTH_SHORT).show();
 
-                // TODO Auto-generated method stub
-                new DatePickerDialog(rawm_entry.this, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
+                }else{
+
+                    Toast.makeText(getApplicationContext(), "SAVED", Toast.LENGTH_SHORT).show();
+
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d(TAG, response);
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(getApplicationContext(), "Error while reading googl", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }) {
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<String,String>();
+                            name=nametxt.getText().toString();
+
+                            params.put("name", name);
+
+                            return params;
+                        }
+                    };
+                    MySingleton.getInstance(addcar .this).addToRequestQueue(stringRequest);}}
+
         });
+
+
+
     }
-
-
-
-    private void updateLabel() {
-        String myFormat = "YYYY-MM-dd"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ENGLISH);
-
-       datetxt.setText(sdf.format(myCalendar.getTime()));
-    }
-
-
-
-
-
-
-
-   public void save_raw_mat_data() {
-
-       myFab = findViewById(R.id.floatbtnsave);
-       myFab.setOnClickListener(new View.OnClickListener() {
-           public void onClick(View v) {
-
-
-               if(quantitytxt.getText().toString().equals("")||timetxt.getText().toString().equals("")||datetxt.getText().toString().equals("")||idtxt.getText().toString().equals("")) {
-                   Toast.makeText(getApplicationContext(), "fill in the missing field", Toast.LENGTH_SHORT).show();}
-               else{
-               Toast.makeText(getApplicationContext(), "SAVED", Toast.LENGTH_SHORT).show();
-
-           StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-               @Override
-               public void onResponse(String response) {
-                   Log.d(TAG, response);
-
-               }
-           }, new Response.ErrorListener() {
-               @Override
-               public void onErrorResponse(VolleyError error) {
-                   Toast.makeText(getApplicationContext(), "Error while reading googl", Toast.LENGTH_SHORT).show();
-
-               }
-           }) {
-               @Override
-               protected Map<String, String> getParams() throws AuthFailureError {
-                   Map<String, String> params = new HashMap<String,String>();
-                   //type=typetxt.getText().toString();
-                   quantity=quantitytxt.getText().toString();
-                   time=timetxt.getText().toString();
-                   id=idtxt.getText().toString();
-                   date=datetxt.getText().toString();
-                   String id2=type+"-"+id+ "-" +name;
-                   params.put("name", name);
-                   params.put("type", type);
-                   params.put("quantity", quantity);
-                   params.put("date", date);
-                   params.put("time", time);
-                   params.put("id", id);
-                   params.put("infor", id2);
-                   return params;
-               }
-           };
-                   MySingleton.getInstance(rawm_entry .this).addToRequestQueue(stringRequest);}}
-
-
-       }); }
-
-
     public void drawable(){
         ActionBarDrawerToggle darwertoggle=new ActionBarDrawerToggle(this,mdrawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close);
         mdrawerLayout.addDrawerListener(darwertoggle);
@@ -354,112 +304,106 @@ getjson2();
 
     }
 
+
+    public void checktext(){
+        if (nametxt.getText().toString().equals("")) {
+            Toast.makeText(this, "You did not enter a name", Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
+    public void clickalalter() {
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+        // set alert_dialog.xml to alertdialog builder
+
+
+        // set dialog message
+        alertDialogBuilder
+                .setTitle("confirm to delete ")
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        save_raw_mat_data2();
+
+                        Toast.makeText(addcar.this,"status saved",Toast.LENGTH_SHORT).show();
+
+                    }
+                })
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+    }
+
+
+    public void save_raw_mat_data2() {
+
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url3, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, response);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "Error while reading googl", Toast.LENGTH_SHORT).show();
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String,String>();
+                name=nametxt.getText().toString();
+
+                params.put("name", typeexpected);
+
+                return params;
+            }
+        };
+        MySingleton.getInstance(addcar .this).addToRequestQueue(stringRequest);}
+
+
+
+
+
+
+
+    public void click() {
+
+        myFab2 = findViewById(R.id.deleteaction);
+        myFab2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                clickalalter();
+
+            }
+
+        });
+
+
+
+    }
+
+
     private void getjson(){
 
 
         showSimpleProgressDialog(this, "Loading...","Fetching Json",true);
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url2,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                        Log.d("strrrrr", ">>" + response);
-
-
-                        try {
-
-
-
-
-
-
-
-
-
-
-                            JSONObject obj = new JSONObject(response);
-                            if(obj.optString("status").equals("true")){
-
-                                statuscheckArrayList1 = new ArrayList<>();
-                                JSONArray dataArray  = obj.getJSONArray("data");
-
-                                for (int i = 0; i < dataArray.length(); i++) {
-
-                                    deleteraw playerModel = new deleteraw();
-                                    JSONObject dataobj = dataArray.getJSONObject(i);
-
-
-                                    playerModel.setName(dataobj.getString("name"));
-
-
-                                    statuscheckArrayList1.add(playerModel);
-
-                                }
-
-                                for (int i = 0; i < statuscheckArrayList1.size(); i++){
-                                    names1.add(statuscheckArrayList1.get(i).getName());
-
-                                }
-
-
-                                ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(rawm_entry.this,simple_spinner_item, names1);
-                                spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
-                                spinner.setAdapter(spinnerArrayAdapter);
-                                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                    @Override
-                                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                        String slectedname = parent.getItemAtPosition(position).toString();
-
-                                        Toast.makeText(getApplicationContext(), "Entered: "+slectedname, Toast.LENGTH_LONG).show();
-                                        type=slectedname;
-
-                                    }
-
-                                    @Override
-                                    public void onNothingSelected(AdapterView<?> parent) {
-
-                                    }
-                                });
-                                removeSimpleProgressDialog();
-
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    private void removeSimpleProgressDialog() {
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //displaying the error in toast if occurrs
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-        // request queue
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-        requestQueue.add(stringRequest);
-
-
-
-    }
-
-    private void showSimpleProgressDialog(rawm_entry addnewrawmat, String s, String fetching_json, boolean b) {
-    }
-
-
-    private void getjson2(){
-
-
-
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url3,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -503,16 +447,16 @@ getjson2();
                                 }
 
 
-                                ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(rawm_entry.this,simple_spinner_item, names);
+                                ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(addcar.this,simple_spinner_item, names);
                                 spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
-                                spinnersup.setAdapter(spinnerArrayAdapter);
-                                spinnersup.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                spinner.setAdapter(spinnerArrayAdapter);
+                                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                     @Override
                                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                         String slectedname = parent.getItemAtPosition(position).toString();
 
                                         Toast.makeText(getApplicationContext(), "Entered: "+slectedname, Toast.LENGTH_LONG).show();
-                                       name=slectedname;
+                                        typeexpected=slectedname;
 
                                     }
 
@@ -550,8 +494,7 @@ getjson2();
 
     }
 
-
-
-
+    private void showSimpleProgressDialog(addcar addcar, String s, String fetching_json, boolean b) {
+    }
 }
 

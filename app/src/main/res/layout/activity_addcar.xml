@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".addproducts"
+    tools:context=".addcar"
     android:id="@+id/drawerlayout"
     android:fitsSystemWindows="true"
     >
@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            android:hint="add car number"
+            android:hint="enter name of new product"
             android:textColor="@color/textboxcolor"
             android:textSize="10dp"
 
@@ -72,6 +72,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spinner2rawmmat"
             app:srcCompat="@drawable/delete" />
+
         <TextView
             android:id="@+id/textView9"
             android:layout_width="wrap_content"

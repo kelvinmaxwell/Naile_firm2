@@ -51,20 +51,20 @@ import java.util.Map;
 
 import static android.R.layout.simple_spinner_item;
 
-public class addproducts extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class addnewrawmat extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     final Calendar myCalendar = Calendar.getInstance();
-    public FloatingActionButton myFab,myFab2;
+
     public String name;
     public EditText nametxt;
-
+    public FloatingActionButton myFab,myFab2;
     final String TAG=this.getClass().getSimpleName();
-    String url = "http://192.168.43.78/www/html/Naile_progect/addproduct.php";
-    String url2 = "http://192.168.43.78/www/html/Naile_progect/selectproduct.php";
-    String url3 = "http://192.168.43.78/www/html/Naile_progect/deleteproduct.php";
+    String url = "http://192.168.43.78/www/html/Naile_progect/addraw.php";
+    String url2 = "http://192.168.43.78/www/html/Naile_progect/selectraw.php";
+    String url3 = "http://192.168.43.78/www/html/Naile_progect/deleteraw.php";
     DrawerLayout mdrawerLayout;
     private Toolbar toolbar;
     private ArrayList<String> names = new ArrayList<String>();
-    public String typeexpected;
+public String typeexpected;
     private static ProgressDialog mProgressDialog;
     private ArrayList<deleteraw> statuscheckArrayList;
     private ArrayList<productsraw> statuscheckArrayList2;
@@ -76,16 +76,17 @@ public class addproducts extends AppCompatActivity implements NavigationView.OnN
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_addproducts);
-mdrawerLayout=findViewById(R.id.drawerlayout);
-spinner=findViewById(R.id.spinner2rawmmat);
+        setContentView(R.layout.activity_addnewrawmat);
+        mdrawerLayout=findViewById(R.id.drawerlayout);
         nametxt=findViewById(R.id.name);
         sessionManager=new SessionManager(this);
-
-checkconn();
-secs();
+        spinner=findViewById(R.id.spinner2rawmmat);
         drawable();
-click();
+
+        checkconn();
+        secs();
+
+
     }
 
 
@@ -128,10 +129,10 @@ click();
 
 
 
+click();
+
+
 getjson();
-            datepicker();
-
-
             save_raw_mat_data();
 
         }
@@ -178,42 +179,196 @@ getjson();
         myFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (nametxt.getText().toString().equals("")) {
-                    Toast.makeText(addproducts.this,"You did not enter a name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(addnewrawmat.this,"You did not enter a name", Toast.LENGTH_SHORT).show();
 
                 }else{
 
-                Toast.makeText(getApplicationContext(), "SAVED", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "SAVED", Toast.LENGTH_SHORT).show();
 
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d(TAG, response);
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d(TAG, response);
 
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), "Error while reading googl", Toast.LENGTH_SHORT).show();
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(getApplicationContext(), "Error while reading googl", Toast.LENGTH_SHORT).show();
 
-                    }
-                }) {
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> params = new HashMap<String,String>();
-                        name=nametxt.getText().toString();
+                        }
+                    }) {
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<String,String>();
+                            name=nametxt.getText().toString();
 
-                        params.put("name", name);
+                            params.put("name", name);
 
-                        return params;
-                    }
-                };
-                MySingleton.getInstance(addproducts .this).addToRequestQueue(stringRequest);}}
+                            return params;
+                        }
+                    };
+                    MySingleton.getInstance(addnewrawmat .this).addToRequestQueue(stringRequest);}}
 
         });
 
 
 
     }
+
+
+
+    public void save_raw_mat_data2() {
+
+
+
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url3, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d(TAG, response);
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(getApplicationContext(), "Error while reading googl", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }) {
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<String,String>();
+                            name=nametxt.getText().toString();
+
+                            params.put("name", typeexpected);
+
+                            return params;
+                        }
+                    };
+                    MySingleton.getInstance(addnewrawmat .this).addToRequestQueue(stringRequest);}
+
+
+
+
+
+
+
+    public void click() {
+
+        myFab2 = findViewById(R.id.deleteaction);
+        myFab2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                clickalalter();
+
+                }
+
+        });
+
+
+
+    }
+
+
+    private void getjson(){
+
+
+        showSimpleProgressDialog(this, "Loading...","Fetching Json",true);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url2,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        Log.d("strrrrr", ">>" + response);
+
+
+                        try {
+
+
+
+
+
+
+
+
+
+
+                            JSONObject obj = new JSONObject(response);
+                            if(obj.optString("status").equals("true")){
+
+                                statuscheckArrayList = new ArrayList<>();
+                                JSONArray dataArray  = obj.getJSONArray("data");
+
+                                for (int i = 0; i < dataArray.length(); i++) {
+
+                                    deleteraw playerModel = new deleteraw();
+                                    JSONObject dataobj = dataArray.getJSONObject(i);
+
+
+                                    playerModel.setName(dataobj.getString("name"));
+
+
+                                    statuscheckArrayList.add(playerModel);
+
+                                }
+
+                                for (int i = 0; i < statuscheckArrayList.size(); i++){
+                                    names.add(statuscheckArrayList.get(i).getName());
+
+                                }
+
+
+                                ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(addnewrawmat.this,simple_spinner_item, names);
+                                spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
+                                spinner.setAdapter(spinnerArrayAdapter);
+                                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                        String slectedname = parent.getItemAtPosition(position).toString();
+
+                                        Toast.makeText(getApplicationContext(), "Entered: "+slectedname, Toast.LENGTH_LONG).show();
+                                        typeexpected=slectedname;
+
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> parent) {
+
+                                    }
+                                });
+                                removeSimpleProgressDialog();
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    private void removeSimpleProgressDialog() {
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //displaying the error in toast if occurrs
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        // request queue
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        requestQueue.add(stringRequest);
+
+
+
+    }
+
+    private void showSimpleProgressDialog(addnewrawmat addnewrawmat, String s, String fetching_json, boolean b) {
+    }
+
+
     public void drawable(){
         ActionBarDrawerToggle darwertoggle=new ActionBarDrawerToggle(this,mdrawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close);
         mdrawerLayout.addDrawerListener(darwertoggle);
@@ -308,192 +463,46 @@ getjson();
         if (nametxt.getText().toString().equals("")) {
             Toast.makeText(this, "You did not enter a name", Toast.LENGTH_SHORT).show();
 
-        }
-    }
+        }}
 
-    public void clickalalter() {
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        public void clickalalter() {
 
-        // set alert_dialog.xml to alertdialog builder
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
+            // set alert_dialog.xml to alertdialog builder
 
-        // set dialog message
-        alertDialogBuilder
-                .setTitle("confirm to delete ")
-                .setCancelable(false)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
 
-                        save_raw_mat_data2();
+            // set dialog message
+            alertDialogBuilder
+                    .setTitle("confirm to delete ")
+                    .setCancelable(false)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
 
-                        Toast.makeText(addproducts.this,"status saved",Toast.LENGTH_SHORT).show();
+                         save_raw_mat_data2();
 
-                    }
-                })
-                .setNegativeButton("Cancel",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
+                            Toast.makeText(addnewrawmat.this,"status saved",Toast.LENGTH_SHORT).show();
 
-        // create alert dialog
-        AlertDialog alertDialog = alertDialogBuilder.create();
-
-        // show it
-        alertDialog.show();
-    }
-
-
-    public void save_raw_mat_data2() {
-
-
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url3, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d(TAG, response);
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), "Error while reading googl", Toast.LENGTH_SHORT).show();
-
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String,String>();
-                name=nametxt.getText().toString();
-
-                params.put("name", typeexpected);
-
-                return params;
-            }
-        };
-        MySingleton.getInstance(addproducts .this).addToRequestQueue(stringRequest);}
-
-
-
-
-
-
-
-    public void click() {
-
-        myFab2 = findViewById(R.id.deleteaction);
-        myFab2.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                clickalalter();
-
-            }
-
-        });
-
-
-
-    }
-
-
-    private void getjson(){
-
-
-        showSimpleProgressDialog(this, "Loading...","Fetching Json",true);
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url2,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                        Log.d("strrrrr", ">>" + response);
-
-
-                        try {
-
-
-
-
-
-
-
-
-
-
-                            JSONObject obj = new JSONObject(response);
-                            if(obj.optString("status").equals("true")){
-
-                                statuscheckArrayList = new ArrayList<>();
-                                JSONArray dataArray  = obj.getJSONArray("data");
-
-                                for (int i = 0; i < dataArray.length(); i++) {
-
-                                    deleteraw playerModel = new deleteraw();
-                                    JSONObject dataobj = dataArray.getJSONObject(i);
-
-
-                                    playerModel.setName(dataobj.getString("productname"));
-
-
-                                    statuscheckArrayList.add(playerModel);
-
-                                }
-
-                                for (int i = 0; i < statuscheckArrayList.size(); i++){
-                                    names.add(statuscheckArrayList.get(i).getName());
-
-                                }
-
-
-                                ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(addproducts.this,simple_spinner_item, names);
-                                spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
-                                spinner.setAdapter(spinnerArrayAdapter);
-                                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                    @Override
-                                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                        String slectedname = parent.getItemAtPosition(position).toString();
-
-                                        Toast.makeText(getApplicationContext(), "Entered: "+slectedname, Toast.LENGTH_LONG).show();
-                                        typeexpected=slectedname;
-
-                                    }
-
-                                    @Override
-                                    public void onNothingSelected(AdapterView<?> parent) {
-
-                                    }
-                                });
-                                removeSimpleProgressDialog();
-
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
-                    }
+                    })
+                    .setNegativeButton("Cancel",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
 
-                    private void removeSimpleProgressDialog() {
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //displaying the error in toast if occurrs
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
 
-        // request queue
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-        requestQueue.add(stringRequest);
-
-
+            // show it
+            alertDialog.show();
+        }
 
     }
 
-    private void showSimpleProgressDialog(addproducts addproducts, String s, String fetching_json, boolean b) {
-    }
-}
+
+
+
 

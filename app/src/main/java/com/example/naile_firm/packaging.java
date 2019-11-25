@@ -68,7 +68,7 @@ public class packaging extends AppCompatActivity  implements NavigationView.OnNa
     private ArrayList<mainid> statuscheckArrayList;
     private ArrayList<String> names = new ArrayList<String>();
     private Spinner spinner;
-
+SessionManager sessionManager;
     public Button getdata, changestatus;
     public EditText getid;
     public TextView txt;
@@ -88,13 +88,13 @@ public class packaging extends AppCompatActivity  implements NavigationView.OnNa
         changestatus = findViewById(R.id.changestatus);
         getid = findViewById(R.id.getidpack);
 txt=findViewById(R.id.nameitem);
-
+        sessionManager=new SessionManager(this);
         getdata = findViewById(R.id.getdatapack);
 
 
 
 checkconn();
-        drawableb();
+        drawable();
         secs();
 
     }
@@ -233,52 +233,80 @@ checkconn();
 
 
 
-    public void drawableb() {
-        NavigationView nav_view = findViewById(R.id.nav_view);
-        ActionBarDrawerToggle darwertoggle = new ActionBarDrawerToggle(this, mdrawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
+    public void drawable(){
+        ActionBarDrawerToggle darwertoggle=new ActionBarDrawerToggle(this,mdrawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close);
         mdrawerLayout.addDrawerListener(darwertoggle);
         darwertoggle.syncState();
-
+        NavigationView nav_view=findViewById(R.id.nav_view);
         nav_view.setNavigationItemSelectedListener(this);
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-        switch (menuItem.getItemId()) {
+        switch (menuItem.getItemId()){
             case R.id.nav_rawm_entry:
-                Intent i = new Intent(".rawm_entry");
+                Intent i=new Intent(".rawm_entry");
                 startActivity(i);
                 break;
             case R.id.nav_raw_mixing:
-                Intent i2 = new Intent(".rawmmixing");
+                Intent i2=new Intent(".rawmmixing");
                 startActivity(i2);
                 break;
             case R.id.nav_get_contents:
-                Intent i3 = new Intent(".get_products_contents");
+                Intent i3=new Intent(".get_products_contents");
                 startActivity(i3);
                 break;
             case R.id.nav_home:
-                Intent i4 = new Intent(".home");
+                Intent i4=new Intent(".home");
                 startActivity(i4);
                 break;
             case R.id.trans_chuka:
-                Intent i8 = new Intent(".transist");
+                Intent i8=new Intent(".transist");
                 startActivity(i8);
                 break;
 
             case R.id.nav_arriv_chuka:
-                Intent i6 = new Intent(".arrivals_chuka");
+                Intent i6=new Intent(".arrivals_chuka");
                 startActivity(i6);
                 break;
             case R.id.status_chuka:
-                Intent i7 = new Intent(".status");
+                Intent i7=new Intent(".status");
                 startActivity(i7);
                 break;
 
+            case R.id.addproduct:
+                Intent i13=new Intent(".addproducts");
+                startActivity(i13);
+                break;
+            case R.id.productgen:
+                Intent i14=new Intent(".packaging");
+                startActivity(i14);
+                break;
             case R.id.reports:
-                Intent i1r=new Intent(".reports");
+                Intent i1r=new Intent(".balances");
                 startActivity(i1r);
+                break;
+            case R.id.addusers:
+                Intent i2r=new Intent(".addusers");
+                startActivity(i2r);
+                break;
+
+            case R.id.addraw:
+                Intent i2r1=new Intent(".addnewrawmat");
+                startActivity(i2r1);
+                break;
+            case R.id.addcar:
+                Intent i2r2=new Intent(".addcar");
+                startActivity(i2r2);
+                break;
+            case R.id.addsupplier:
+                Intent i2r21=new Intent(".addsupplier");
+                startActivity(i2r21);
+                break;
+            case R.id.logout:
+                sessionManager.logout();
+                (this).finish();
                 break;
 
         }
@@ -288,13 +316,13 @@ checkconn();
 
     @Override
     public void onBackPressed() {
-        if (mdrawerLayout.isDrawerOpen(GravityCompat.START)) {
+        if(mdrawerLayout.isDrawerOpen(GravityCompat.START)){
             mdrawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        } else{
+            super.onBackPressed();}
 
     }
+
 
     private void retrieveJSON() {
 
