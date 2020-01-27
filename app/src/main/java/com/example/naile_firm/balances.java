@@ -69,7 +69,7 @@ public class balances extends AppCompatActivity implements NavigationView.OnNavi
   public  EditText startdate,enddate;
   SessionManager sessionManager;
 
-    public String typeexpected;
+    public String typeexpected,idcar;
     private static ProgressDialog mProgressDialog;
     private ArrayList<deleteraw> statuscheckArrayList;
     private ArrayList<productsraw> statuscheckArrayList2;
@@ -309,7 +309,7 @@ enddates=enddate.getText().toString();
 
 
 
-                params.put("id", id1);
+                params.put("id", idcar);
                 params.put("startdate",startdates);
                 params.put("enddate",enddates);
 
@@ -685,7 +685,7 @@ public void cal2(){
 
 
 
-                params.put("id", id1);
+
                 params.put("startdate",startdates);
                 params.put("enddate",enddates);
 
@@ -848,7 +848,7 @@ public void cal2(){
                                         String slectedname = parent.getItemAtPosition(position).toString();
 
                                         Toast.makeText(getApplicationContext(), "Entered: "+slectedname, Toast.LENGTH_LONG).show();
-                                       id1=slectedname;
+                                       idcar=slectedname;
 
                                     }
 
